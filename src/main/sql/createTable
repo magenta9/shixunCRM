@@ -1,0 +1,68 @@
+# 用户表
+CREATE TABLE `user` (
+  `u_id` int(11) NOT NULL AUTO_INCREMENT, 	# userid
+  `u_name` varchar(20) NOT NULL, 			# 客户名字
+  `u_password` varchar(20) NOT NULL,		# 客户密码
+  `u_sex` varchar(10) NOT NULL,				# 客户性别
+  `u_email` varchar(30) NOT NULL,			# 客户邮箱
+  `u_phone` varchar(20) DEFAULT NULL,		# 客户电话
+  `u_score` int(4) DEFAULT NULL,			# 客户积分
+  `U_level` int(1) DEFAULT NULL,			# 客户等级
+  `u_createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 创建时间
+  `is_deleted` tinyint(1) DEFAULT NULL,		# 是否删除
+  PRIMARY KEY (`u_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 管理员表
+CREATE TABLE `admin` (
+  `a_id` int(11) NOT NULL AUTO_INCREMENT,	# 管理员id
+  `a_name` varchar(20) NOT NULL,			# 管理员姓名
+  `a_password` varchar(20) NOT NULL,		# 管理员密码
+  PRIMARY KEY (`a_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 产品表
+create table product (
+	p_id int NOT NULL AUTO_INCREMENT primary key,	# 产品id
+	c_id int NOT NULL,								# 产品种类id
+	p_name varchar(50) NOT NULL,					# 产品名
+	p_price double(10, 2) NOT NULL,					# 产品价格
+	p_image varchar(100) NOT NULL,					# 产品图片地址
+	p_context varchar(255) NOT NULL,				# 产品简介
+	p_brand varchar(100) NOT NULL 					# 品牌
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 产品种类表
+create table catagory (
+	c_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,	# 种类id
+	c_name varchar(100) NOT NULL					# 种类名
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 订单表
+create table orders (
+	o_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,	# 订单id
+	o_code char(16) NOT NULL, 						# 订单号
+	u_id int NOT NULL, 								# 客户
+	o_sum double(10, 2), 							# 支付价
+	o_discount double(2,2) 							# 折扣
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 订单单项表
+create table orderitem (
+	o_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,	# 订单单项id
+	p_id int NOT NULL,								# 订单id
+	p_id int NOT NULL,								# 商品id
+	oi_number int NOT NULL							# 订单数量
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+# 留言表
+create table message_board (
+	m_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,	# 留言项id
+	u_id INT NOT NULL,								# 留言用户id
+	m_text text NOT NULL,							# 留言信息
+	m_data timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 留言时间
+	m_state int(1)									# 留言状态 (待处理 / 已解决)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
