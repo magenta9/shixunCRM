@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserDao">
+    <resultMap id="user1" type="User">
+        <id property="userId" column="u_id"/>
+        <result property="userName" column="u_name"/>
+        <result property="userPassword" column="u_password"/>
+        <result property="userSex" column="u_sex"/>
+        <result property="userEmail" column="u_email"/>
+        <result property="userPhone" column="u_phone"/>
+        <result property="userScore" column="u_score"/>
+        <result property="userLevel" column="u_level"/>
+        <result property="userCreateData" column="u_createdate"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+    <insert id="add" parameterType="User" >
+        INSERT INTO user(`u_name`, `u_password`, `u_sex`, `u_email`, `u_phone`, `u_score`, `u_level`, `is_deleted`)
+        VALUES(#{userName}, #{userPassword}, #{userSex}, #{userEmail},#{userPhone}, #{userScore}, #{userLevel}, #{isDeleted});
+    </insert>
+
+    <insert id="addList" parameterType="User">
+        <foreach collection="list" index="index" separator="," item="user">
+            INSERT INTO user(`u_name`, `u_password`, `u_sex`, `u_email`, `u_phone`, `u_score`, `u_level`, `is_deleted`)
+            VALUES(#{user.userName}, #{user.userPassword}, #{user.userSex}, #{user.userEmail},#{user.userPhone},
+            #{user.userScore}, #{user.userLevel}, #{user.isDeleted});
+        </foreach>
+    </insert>
+
+    <select id="findById" parameterType="int" resultMap="user1">
+        SELECT * FROM `user` WHERE `u_id`=#{id} AND is_deleted=0;
+    </select>
+
+    <select id="findAll" resultMap="user1">
+        SELECT * FROM `user` WHERE is_deleted=0;
+    </select>
+
+    <select id="findbyNameAndPwd" resultType="int">
+        SELECT COUNT(*) FROM `user` WHERE u_name=#{arg0} AND u_password=#{arg1} AND is_deleted=0;
+    </select>
+
+    <update id="update" parameterType="User">
+        UPDATE user
+        <set>
+            u_password=#{userPassword},
+            u_sex=#{userSex},
+            u_email=#{userEmail},
+            u_phone=#{userPhone},
+            u_score=#{userScore},
+            u_level=#{userLevel},
+            is_deleted=#{isDeleted}
+        </set>
+        WHERE u_id=#{userId};
+    </update>
+
+    <update id="del" parameterType="User">
+        UPDATE user set is_deleted=1 WHERE u_id=#{userId};
+    </update>
+
+
+
+</mapper>

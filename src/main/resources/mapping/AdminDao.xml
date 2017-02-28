@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdminDao">
+    <resultMap id="admin" type="Admin">
+        <id property="adminId" column="a_id"/>
+        <result property="adminName" column="a_name"/>
+        <result property="adminPassword" column="a_password"/>
+    </resultMap>
+
+    <insert id="add" parameterType="Admin">
+    INSERT INTO admin(`a_name`, `a_password`) VALUES(#{adminName}, #{adminPassword});
+    </insert>
+
+    <update id="del" parameterType="Admin">
+        DELETE FROM admin WHERE a_id=#{adminId};
+    </update>
+
+    <update id="update" parameterType="Admin">
+        UPDATE admin
+        <set>
+            a_name=#{adminName},
+            a_password=#{adminPassword}
+        </set>
+        WHERE a_id=#{adminId};
+    </update>
+
+    <select id="findById" parameterType="int" resultMap="admin">
+        SELECT * FROM admin WHERE a_id=#{adminId};
+    </select>
+
+    <select id="findbyNameAndPwd" resultType="int">
+        SELECT COUNT(*) FROM admin WHERE a_name=#{arg0} AND a_password=#{arg1};
+    </select>
+
+    <select id="findAll" resultMap="admin">
+        SELECT * FROM admin;
+    </select>
+
+</mapper>

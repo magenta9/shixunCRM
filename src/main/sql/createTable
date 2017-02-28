@@ -50,7 +50,7 @@ create table orders (
 # 订单单项表
 create table orderitem (
 	o_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,	# 订单单项id
-	p_id int NOT NULL,								# 订单id
+	order_id int NOT NULL,								# 订单id
 	p_id int NOT NULL,								# 商品id
 	oi_number int NOT NULL							# 订单数量
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -59,8 +59,8 @@ create table orderitem (
 create table message_board (
 	m_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,	# 留言项id
 	u_id INT NOT NULL,								# 留言用户id
-	m_text text NOT NULL,							# 留言信息
-	m_data timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 留言时间
+	m_message text NOT NULL,							# 留言信息
+	m_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 留言时间
 	m_state int(1)									# 留言状态 (待处理 / 已解决)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

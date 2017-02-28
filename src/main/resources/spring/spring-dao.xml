@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"
+          p:driverClassName="${jdbc.driver}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}"
+
+          p:initialSize="1"
+          p:minIdle="1"
+          p:maxActive="100"
+
+          p:maxWait="10000"
+          p:timeBetweenEvictionRunsMillis="60000"
+          p:minEvictableIdleTimeMillis="300000"
+
+          p:testWhileIdle="true"
+          p:testOnBorrow="true"
+          p:testOnReturn="false"
+
+          p:poolPreparedStatements="true"
+          p:maxPoolPreparedStatementPerConnectionSize="20"
+
+          p:defaultAutoCommit="true"
+
+          p:validationQuery="select 1"
+          p:filters="stat" >
+        <property name="proxyFilters">
+            <list>
+                <ref bean="logFilter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter"
+          p:statementExecutableSqlLogEnable="true" />
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:configLocation="classpath:mybatis-config.xml"
+          p:typeAliasesPackage="entity"
+          p:mapperLocations="classpath:mapping/*.xml">
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 注入sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 给出需要扫描Dao接口包 -->
+        <property name="basePackage" value="dao"/>
+    </bean>
+</beans>
