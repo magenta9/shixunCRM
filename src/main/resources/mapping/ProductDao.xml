@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProductDao">
+    <resultMap id="product" type="Product">
+        <id property="productId" column="p_id"/>
+        <result property="catagoryId" column="c_id"/>
+        <result property="produceName" column="p_name"/>
+        <result property="producePrice" column="p_price"/>
+        <result property="produceImage" column="p_image"/>
+        <result property="produceContext" column="p_context"/>
+        <result property="produceBrand" column="p_brand"/>
+    </resultMap>
+
+    <insert id="add" parameterType="Product">
+        INSERT INTO product(c_id, p_name, p_price, p_image, p_context, p_brand)
+        VALUES(#{catagoryId}, #{produceName}, #{producePrice}, #{produceImage}, #{produceContext}, #{produceBrand});
+    </insert>
+
+    <insert id="addList" parameterType="Product">
+        INSERT INTO product(c_id, p_name, p_price, p_image, p_context, p_brand) VALUES
+        <foreach collection="list" index="index" separator="," item="product">
+            (#{product.catagoryId}, #{product.produceName}, #{product.producePrice}, #{product.produceImage}, #{product.produceContext}, #{product.produceBrand})
+        </foreach>
+    </insert>
+
+    <select id="findAll" resultMap="product">
+        SELECT * FROM product;
+    </select>
+
+    <select id="findbyCatagoryId" resultMap="product" parameterType="int">
+        SELECT * FROM product WHERE c_id=#{cid};
+    </select>
+</mapper>

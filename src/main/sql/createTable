@@ -10,6 +10,7 @@ CREATE TABLE `user` (
   `U_level` int(1) DEFAULT NULL,			# 客户等级
   `u_createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 创建时间
   `is_deleted` tinyint(1) DEFAULT NULL,		# 是否删除
+  `u_image_id` varchar(100) DEFAULT NULL,   # 图片编号
   PRIMARY KEY (`u_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -44,7 +45,8 @@ create table orders (
 	o_code char(16) NOT NULL, 						# 订单号
 	u_id int NOT NULL, 								# 客户
 	o_sum double(10, 2), 							# 支付价
-	o_discount double(2,2) 							# 折扣
+	o_discount double(2,2), 						# 折扣
+	`o_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP # 购买时间
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # 订单单项表
@@ -62,6 +64,12 @@ create table message_board (
 	m_message text NOT NULL,							# 留言信息
 	m_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 留言时间
 	m_state int(1)									# 留言状态 (待处理 / 已解决)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table image_url (
+    image_id int not null AUTO_INCREMENT PRIMARY KEY,   # 图片编号
+    image_url varchar(100) NOT NULL                     # 图片路径
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.OrderItemDao">
+    <resultMap id="oi" type="OrderItem">
+        <id property="orderItemId" column="o_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="productId" column="p_id"/>
+        <result property="orderItemNum" column="oi_number"/>
+    </resultMap>
+
+    <select id="findbyOrderId" parameterType="int" resultMap="oi">
+        SELECT * FROM orderitem WHERE order_id=#{id};
+    </select>
+
+    <insert id="add" parameterType="OrderItem">
+        INSERT INTO orderitem(order_id, p_id, oi_number) VALUES(#{orderId}, #{productId}, #{orderItemNum});
+    </insert>
+
+    <insert id="addList" parameterType="OrderItem">
+        INSERT INTO orderitem(order_id, p_id, oi_number) VALUES
+        <foreach collection="list" index="index" item="oi" separator=",">
+            (#{oi.orderId}, #{oi.productId}, #{oi.orderItemNum})
+        </foreach>
+    </insert>
+
+    <delete id="del" parameterType="OrderItem">
+        DELETE FROM orderitem WHERE o_id=#{orderItemId};
+    </delete>
+
+    <delete id="delbyOrderId" parameterType="int">
+        DELETE FROM orderitem WHERE order_id=#{id};
+    </delete>
+
+    <select id="findAll" resultMap="oi">
+        SELECT * FROM orderitem;
+    </select>
+</mapper>

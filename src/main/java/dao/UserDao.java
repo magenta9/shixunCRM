@@ -1,16 +1,14 @@
 package dao;
 
 import entity.User;
-import org.apache.ibatis.annotations.Param;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * User的查询模型
  * Created by magenta9 on 2017/2/27.
  */
-public interface UserDao extends Dao<User>{
+public interface UserDao {
     int add(User user);
 
     int del(User user);
@@ -24,4 +22,7 @@ public interface UserDao extends Dao<User>{
     int findbyNameAndPwd(String name, String password);
 
     int addList(List<User> users);
+
+    int addImage(User user);
+
 }

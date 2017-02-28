@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,13 +38,13 @@ public class UserTest {
     @Test
     public void testaddUser() {
         User user = new User();
-        user.setUserEmail("12345678@qq.com");
-        user.setUserLevel(3);
-        user.setUserScore(1031);
-        user.setUserName("abandon");
+        user.setUserEmail("123326178@qq.com");
+        user.setUserLevel(6);
+        user.setUserScore(2000);
+        user.setUserName("girl");
         user.setUserPassword("123456");
-        user.setUserSex("男");
-        user.setUserPhone("1515151515");
+        user.setUserSex("女");
+        user.setUserPhone("115");
         System.out.println(userDao.add(user));
     }
 
@@ -84,5 +85,40 @@ public class UserTest {
     public void testDelUser() {
         User user = userDao.findById(1);
         System.out.println(userDao.del(user));
+    }
+
+    @Test
+    public void testAddImage() {
+        User user = userDao.findById(2);
+        user.setUserImageId("../images/absdsdsd.jpg");
+        System.out.println(userDao.addImage(user));
+    }
+
+    /**
+     * 测试批量导入功能
+     */
+    @Test
+    public void testAddList() {
+        User user = new User();
+        user.setUserEmail("123326178@qq.com");
+        user.setUserLevel(6);
+        user.setUserScore(2000);
+        user.setUserName("girl");
+        user.setUserPassword("123456");
+        user.setUserSex("女");
+        user.setUserPhone("115");
+        List<User> list = new ArrayList<>();
+        list.add(user);
+
+        User user1 = new User();
+        user1.setUserEmail("12332316178@qq.com");
+        user1.setUserLevel(3);
+        user1.setUserScore(200);
+        user1.setUserName("bbb");
+        user1.setUserPassword("123456");
+        user1.setUserSex("男");
+        user1.setUserPhone("11565178178");
+        list.add(user1);
+        System.out.println(userDao.addList(list));
     }
 }

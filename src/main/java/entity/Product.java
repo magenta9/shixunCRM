@@ -7,7 +7,7 @@ import java.io.Serializable;
  p_id int NOT NULL AUTO_INCREMENT primary key,	# 产品id
  c_id int NOT NULL,								# 产品种类id
  p_name varchar(50) NOT NULL,					# 产品名
- p_price double(10, 2) NOT NULL,					# 产品价格
+ p_price double(10, 2) NOT NULL,				# 产品价格
  p_image varchar(100) NOT NULL,					# 产品图片地址
  p_context varchar(255) NOT NULL,				# 产品简介
  p_brand varchar(100) NOT NULL 					# 品牌

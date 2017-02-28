@@ -13,6 +13,11 @@ public class Catagory implements Serializable {
     private int catagoryId;
     private String catagoryName;
 
+    public Catagory(String catagoryName) {
+        this.catagoryId = 0;
+        this.catagoryName = catagoryName;
+    }
+
     public int getCatagoryId() {
         return catagoryId;
     }

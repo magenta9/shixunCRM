@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.UserDao">
     <resultMap id="user1" type="User">
         <id property="userId" column="u_id"/>
@@ -13,17 +13,18 @@
         <result property="userLevel" column="u_level"/>
         <result property="userCreateData" column="u_createdate"/>
         <result property="isDeleted" column="is_deleted"/>
+        <result property="userImageId" column="u_image_id"/>
     </resultMap>
+
     <insert id="add" parameterType="User" >
-        INSERT INTO user(`u_name`, `u_password`, `u_sex`, `u_email`, `u_phone`, `u_score`, `u_level`, `is_deleted`)
-        VALUES(#{userName}, #{userPassword}, #{userSex}, #{userEmail},#{userPhone}, #{userScore}, #{userLevel}, #{isDeleted});
+        INSERT INTO user(`u_name`, `u_password`, `u_sex`, `u_email`, `u_phone`, `u_score`, `u_level`, `is_deleted`, `u_image_id`)
+        VALUES(#{userName}, #{userPassword}, #{userSex}, #{userEmail},#{userPhone}, #{userScore}, #{userLevel}, #{isDeleted}, #{userImageId});
     </insert>
 
     <insert id="addList" parameterType="User">
+        INSERT INTO user(u_name, u_password, u_sex, u_email, u_phone, u_score, u_level, is_deleted) VALUES
         <foreach collection="list" index="index" separator="," item="user">
-            INSERT INTO user(`u_name`, `u_password`, `u_sex`, `u_email`, `u_phone`, `u_score`, `u_level`, `is_deleted`)
-            VALUES(#{user.userName}, #{user.userPassword}, #{user.userSex}, #{user.userEmail},#{user.userPhone},
-            #{user.userScore}, #{user.userLevel}, #{user.isDeleted});
+            (#{user.userName}, #{user.userPassword}, #{user.userSex}, #{user.userEmail}, #{user.userPhone}, #{user.userScore}, #{user.userLevel}, #{user.isDeleted})
         </foreach>
     </insert>
 
@@ -57,6 +58,7 @@
         UPDATE user set is_deleted=1 WHERE u_id=#{userId};
     </update>
 
-
-
+    <update id="addImage" parameterType="User">
+        UPDATE user set u_image_id=#{userImageId} WHERE u_id=#{userId};
+    </update>
 </mapper>

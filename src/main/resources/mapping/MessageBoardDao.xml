@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.MessageBoardDao">
+    <resultMap id="mb" type="MessageBoard">
+        <id property="messageId" column="m_id"/>
+        <result property="userId" column="u_id"/>
+        <result property="message" column="m_message" />
+        <result property="date" column="m_date"/>
+        <result property="state" column="m_state"/>
+    </resultMap>
+    <insert id="add" parameterType="MessageBoard">
+        INSERT INTO message_board(u_id, m_message, m_state) VALUES(#{userId}, #{message}, #{state});
+    </insert>
+
+    <update id="update" parameterType="MessageBoard">
+        UPDATE message_board set m_state=#{state} WHERE m_id=#{messageId};
+    </update>
+
+    <select id="findAll" resultMap="mb">
+        SELECT * FROM message_board;
+    </select>
+
+    <select id="findMessageHandling" resultMap="mb">
+        SELECT * FROM message_board WHERE m_state != 2;
+    </select>
+
+    <select id="findMessageNotHandle" resultMap="mb">
+        SELECT * FROM message_board WHERE m_state=0;
+    </select>
+</mapper>

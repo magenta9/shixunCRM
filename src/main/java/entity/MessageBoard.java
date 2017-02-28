@@ -7,7 +7,7 @@ import java.io.Serializable;
  create table message_board (
  m_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,	# 留言项id
  u_id INT NOT NULL,								# 留言用户id
- m_message text NOT NULL,							# 留言信息
+ m_message text NOT NULL,						# 留言信息
  m_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 留言时间
  m_state int(1)									# 留言状态 (待处理 / 已解决)
  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -17,7 +17,7 @@ public class MessageBoard implements Serializable {
     private int userId;
     private String message;
     private String date;
-    private int state;
+    private int state;  //0:未受理,1:处理中,2.已处理
 
     public int getMessageId() {
         return messageId;

@@ -15,6 +15,7 @@ import java.io.Serializable;
  `U_level` int(1) DEFAULT NULL,			# 客户等级
  `u_createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 创建时间
  `is_deleted` tinyint(1) DEFAULT NULL,		# 是否删除
+ `u_image_id` varchar(100) DEFAULT NULL,            # 图片编号
  PRIMARY KEY (`u_id`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  * Created by magenta9 on 2017/2/27.
@@ -29,6 +30,7 @@ public class User implements Serializable {
     private int userScore;
     private int userLevel;
     private String userCreateData;
+    private String userImageId;
     private int isDeleted = 0;
 
     public int getUserId() {
@@ -37,6 +39,14 @@ public class User implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUserImageId() {
+        return userImageId;
+    }
+
+    public void setUserImageId(String userImageId) {
+        this.userImageId = userImageId;
     }
 
     public String getUserName() {

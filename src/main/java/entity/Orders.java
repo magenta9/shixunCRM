@@ -17,7 +17,7 @@ public class Orders implements Serializable {
     private String ordersCode;
     private int userId;
     private Double ordersSum;
-    private Double ordersDiscount;
+    private Double ordersDiscount = 1.0;
 
     public int getOrdersId() {
         return ordersId;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CatagoryDao">
+    <resultMap id="catagory" type="Catagory">
+        <id property="catagoryId" column="c_id"/>
+        <result property="catagoryName" column="c_name"/>
+    </resultMap>
+    <insert id="add" parameterType="Catagory">
+        INSERT INTO catagory(c_name) VALUES(#{catagoryName});
+    </insert>
+
+    <select id="findNamebyId" parameterType="int" resultType="String">
+        SELECT c_name FROM catagory WHERE c_id=#{id};
+    </select>
+</mapper>
