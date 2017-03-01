@@ -8,9 +8,10 @@
         <result property="userId" column="u_id"/>
         <result property="ordersSum" column="o_sum"/>
         <result property="ordersDiscount" column="o_discount"/>
+        <result property="ordersDate" column="o_date"/>
     </resultMap>
     <select id="findbyUserId" parameterType="int" resultMap="orders">
-        SELECT * FROM orders WHERE u_id=#{id};
+        SELECT * FROM orders  WHERE u_id=#{id} ORDER BY o_date DESC;
     </select>
 
     <insert id="add" parameterType="Orders">

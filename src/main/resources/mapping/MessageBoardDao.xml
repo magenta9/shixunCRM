@@ -18,14 +18,11 @@
     </update>
 
     <select id="findAll" resultMap="mb">
-        SELECT * FROM message_board;
+        SELECT * FROM message_board ORDER BY m_date DESC;
     </select>
 
-    <select id="findMessageHandling" resultMap="mb">
-        SELECT * FROM message_board WHERE m_state != 2;
+    <select id="findMessagebydState" resultMap="mb" parameterType="int">
+        SELECT * FROM message_board WHERE m_state=#{state} ORDER BY m_date DESC;
     </select>
 
-    <select id="findMessageNotHandle" resultMap="mb">
-        SELECT * FROM message_board WHERE m_state=0;
-    </select>
 </mapper>
