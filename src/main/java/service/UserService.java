@@ -1,8 +1,6 @@
 package service;
 
 import entity.User;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import util.Pagination;
 
 import java.util.List;
@@ -26,5 +24,5 @@ public interface UserService {
     //批量插入会员
     int addUser(List<User> userList);
     
-    int judgeUserNameAndPassword(String name, String pwd);
+    boolean judgeUserNameAndPassword(String name, String pwd);
 }

@@ -1,3 +1,6 @@
 .idea/
 target/
 shixunCRM.iml
+.classpath
+.project
+shixunCRM.userlibraries

@@ -1,8 +1,10 @@
 package serviceimpl;
 
+import dao.AdminDao;
 import dao.UserDao;
 import entity.User;
 import entity.UserPagination;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.UserService;
@@ -20,7 +22,8 @@ public class UserServicesImpl implements UserService{
     @Resource
     private UserDao userDao;
 
-
+    @Autowired
+    private AdminDao adminDao;
 
     /**
      *  1. 获得当前的全部会员数量totalCount
@@ -85,6 +88,11 @@ public class UserServicesImpl implements UserService{
     @Override
     public int addUser(List<User> userList) {
         return userDao.addList(userList);
+    }
+
+    @Override
+    public boolean judgeUserNameAndPassword(String name, String pwd) {
+        return adminDao.findbyNameAndPwd(name, pwd)!=0;
     }
 
 
