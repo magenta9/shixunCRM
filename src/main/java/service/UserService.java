@@ -25,4 +25,6 @@ public interface UserService {
 
     //批量插入会员
     int addUser(List<User> userList);
+    
+    int judgeUserNameAndPassword(String name, String pwd);
 }
