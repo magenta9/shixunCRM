@@ -16,4 +16,5 @@ public interface ProductDao {
 
     List<Product> findbyCatagoryId(int cid);
 
+    Product findbyId(int id);
 }
