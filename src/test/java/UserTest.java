@@ -26,7 +26,7 @@ public class UserTest {
     /**
      * 测试id查询
      */
-    @Test
+//    @Test
     public void testFindbyId() {
         User user = userDao.findById(1);
         System.out.println(user.getUserName() + user.getUserEmail());
@@ -97,7 +97,7 @@ public class UserTest {
     /**
      * 测试批量导入功能
      */
-    @Test
+     @Test
     public void testAddList() {
         User user = new User();
         user.setUserEmail("123326178@qq.com");
@@ -121,4 +121,54 @@ public class UserTest {
         list.add(user1);
         System.out.println(userDao.addList(list));
     }
+
+    /**
+     * 测试返回所有注册会员数量
+     */
+    @Test
+    public void testGetTotalCount(){
+        System.out.println("当前注册会员的数量为:"+userDao.getTotalCount());
+    }
+
+    /**
+     * 测试分页返回会员信息
+     */
+    @Test
+    public void testList(){
+        List<User> users = userDao.list(0,2);
+        for (User user:users
+             ) {
+            System.out.println("user:"+user);
+        }
+    }
+
+    @Test
+    public void testGetCount(){
+        System.out.println("当前符合的会员有:"+userDao.getCount("gi")+"个");
+
+    }
+
+    @Test
+    public void testSerachByUname(){
+        List<User> users =userDao.serachByUname("gi",0,2);
+        for (User user:users
+                ) {
+            System.out.println("user:"+user);
+        }
+    }
+
+    @Test
+    public void testGetCountByLevel(){
+        System.out.println("等级为3的会员数量为:"+userDao.getCountByLevel(3));
+    }
+
+    @Test
+    public void testSearchUsersByLevel(){
+        List<User> users =userDao.searchUsersByLevel(6,0,2);
+        for (User user:users
+                ) {
+            System.out.println("user:"+user);
+        }
+    }
+
 }

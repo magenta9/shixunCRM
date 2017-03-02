@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd">
     <import resource="spring-dao.xml" />
     <!-- 扫描service包下所有使用注解的类型 -->
-    <context:component-scan base-package="service">
+    <context:component-scan base-package="serviceimpl">
         <!-- 只扫描标记了Service的类 -->
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>

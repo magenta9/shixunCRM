@@ -15,5 +15,7 @@ public interface MessageBoardDao {
 
     List<MessageBoard> findAll();
 
-    List<MessageBoard> findMessagebydState(int state);
+    List<MessageBoard> findMessageHandling();
+
+    List<MessageBoard> findMessageNotHandle();
 }
