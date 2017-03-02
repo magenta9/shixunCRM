@@ -9,6 +9,7 @@ import java.io.Serializable;
  u_id int NOT NULL, 								# 客户
  o_sum double(10, 2), 							# 支付价
  o_discount double(2,2) 							# 折扣
+ `o_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP # 购买时间
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  * Created by magenta9 on 2017/2/27.
  */
@@ -18,6 +19,16 @@ public class Orders implements Serializable {
     private int userId;
     private Double ordersSum;
     private Double ordersDiscount = 1.0;
+ private String ordersDate;		
+ 	
+    public String getOrdersDate() {		
+        return ordersDate;		
+    }		
+ 	
+    public void setOrdersDate(String ordersDate) {		
+        this.ordersDate = ordersDate;		
+    }		
+  
 
     public int getOrdersId() {
         return ordersId;
