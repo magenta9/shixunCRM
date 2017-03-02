@@ -19,15 +19,16 @@ public class Orders implements Serializable {
     private int userId;
     private Double ordersSum;
     private Double ordersDiscount = 1.0;
-    private String ordersDate;
-
-    public String getOrdersDate() {
-        return ordersDate;
-    }
-
-    public void setOrdersDate(String ordersDate) {
-        this.ordersDate = ordersDate;
-    }
+ private String ordersDate;		
+ 	
+    public String getOrdersDate() {		
+        return ordersDate;		
+    }		
+ 	
+    public void setOrdersDate(String ordersDate) {		
+        this.ordersDate = ordersDate;		
+    }		
+  
 
     public int getOrdersId() {
         return ordersId;

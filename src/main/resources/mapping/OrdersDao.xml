@@ -11,7 +11,7 @@
         <result property="ordersDate" column="o_date"/>
     </resultMap>
     <select id="findbyUserId" parameterType="int" resultMap="orders">
-        SELECT * FROM orders  WHERE u_id=#{id} ORDER BY o_date DESC;
+        SELECT * FROM orders WHERE u_id=#{id} ORDER BY o_date DESC;
     </select>
 
     <insert id="add" parameterType="Orders">

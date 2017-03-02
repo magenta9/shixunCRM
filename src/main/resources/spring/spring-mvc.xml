@@ -20,6 +20,16 @@
     <mvc:resources mapping="/fonts/**" location="/static/fonts/"/>
     <mvc:default-servlet-handler />
 
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="mediaTypes">
+            <value>
+                json=application/json
+                xml=application/xml
+            </value>
+        </property>
+    </bean>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:viewClass="org.springframework.web.servlet.view.JstlView"
           p:prefix="/WEB-INF/jsp/"
@@ -28,9 +38,11 @@
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
           p:maxUploadSize="10000000">
+        <property name="uploadTempDir" value="/tmp" />  <!-- 临时目录 -->
     </bean>
 
-    <context:component-scan base-package="mvc">
+    <context:component-scan base-package="controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
+
 </beans>

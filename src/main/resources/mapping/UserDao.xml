@@ -61,4 +61,29 @@
     <update id="addImage" parameterType="User">
         UPDATE user set u_image_id=#{userImageId} WHERE u_id=#{userId};
     </update>
+    
+    <select id="getTotalCount" resultType="int">
+      SELECT COUNT(*) FROM USER ;
+    </select>
+
+    <select id="list" resultMap="user1">
+        SELECT * FROM USER  ORDER BY U_CREATEDATE LIMIT #{offSet} , #{pageSize};
+    </select>
+
+    <select id="getCount" resultType="int" >
+        SELECT COUNT(*) FROM USER WHERE U_NAME LIKE "%"#{uname}"%";
+    </select>
+
+    <select id="serachByUname" resultMap="user1">
+        SELECT * FROM USER  WHERE U_NAME LIKE "%"#{uname}"%" LIMIT #{offSet} , #{pageSize};
+    </select>
+
+    <select id="getCountByLevel" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM USER WHERE u_level=#{level};
+    </select>
+
+    <select id="searchUsersByLevel" resultMap="user1">
+        SELECT * FROM USER  WHERE u_level = #{level} LIMIT #{offSet} , #{pageSize};
+    </select>
+
 </mapper>
