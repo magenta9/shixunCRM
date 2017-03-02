@@ -17,11 +17,38 @@
         UPDATE message_board set m_state=#{state} WHERE m_id=#{messageId};
     </update>
 
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM message_board;
+    </select>
+
+    <select id="getTotalCountbyState" resultType="int">
+        SELECT COUNT(*) FROM message_board WHERE m_state=#{state};
+    </select>
+
     <select id="findAll" resultMap="mb">		     
         SELECT * FROM message_board ORDER BY m_date DESC;
-    </select>		 
-  		  
-    <select id="findMessagebydState" resultMap="mb" parameterType="int">
-          SELECT * FROM message_board WHERE m_state=#{state} ORDER BY m_date DESC;		
     </select>
+
+    <select id="listAll" resultMap="mb">
+        SELECT * FROM message_board ORDER BY m_date DESC LIMIT #{offset}, #{pageSize};
+    </select>
+
+    <select id="findMessagebydState" resultMap="mb" parameterType="int">
+        SELECT * FROM message_board WHERE m_state=#{state} ORDER BY m_date DESC;
+    </select>
+
+    <select id="findMessageLNotSolved" resultMap="mb">
+        SELECT * FROM message_board WHERE m_state !=2 ORDER BY m_date DESC;
+    </select>
+
+    <select id="listbyState" resultMap="mb" >
+        SELECT * FROM message_board WHERE m_state=#{state} ORDER BY m_date DESC LIMIT #{offset}, #{pageSize};
+    </select>
+
+    <insert id="addList" parameterType="MessageBoard">
+        INSERT INTO message_board(u_id, m_message, m_state) VALUES
+        <foreach collection="list" index="index" separator="," item="message">
+            (#{message.userId}, #{message.message}, #{message.state})
+        </foreach>
+    </insert>
 </mapper>

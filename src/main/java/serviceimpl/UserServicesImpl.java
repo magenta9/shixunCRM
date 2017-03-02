@@ -22,9 +22,6 @@ public class UserServicesImpl implements UserService{
     @Resource
     private UserDao userDao;
 
-    @Autowired
-    private AdminDao adminDao;
-
     /**
      *  1. 获得当前的全部会员数量totalCount
      *  2. 创建承载会员对象的分页组件并传入 pageIndex -> 需要的某页 ; pageSize -> 需要的一页显示的数量 ;totalCount -> 总数量
@@ -79,7 +76,7 @@ public class UserServicesImpl implements UserService{
     @Override
     public boolean addUser(User user) {
         boolean result =false;
-        if(userDao.add(user)!=-1){
+        if(userDao.add(user)!= -1){
             result=true;
         }
         return result;
@@ -90,10 +87,6 @@ public class UserServicesImpl implements UserService{
         return userDao.addList(userList);
     }
 
-    @Override
-    public boolean judgeUserNameAndPassword(String name, String pwd) {
-        return adminDao.findbyNameAndPwd(name, pwd)!=0;
-    }
 
 
 }
