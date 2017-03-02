@@ -31,4 +31,8 @@
     <select id="findbyCatagoryId" resultMap="product" parameterType="int">
         SELECT * FROM product WHERE c_id=#{cid};
     </select>
+    
+    <select id="findbyId" resultMap="product" parameterMap="int">
+        SELECT * FROM product WHERE p_id=#{p_id};
+    </select>
 </mapper>
