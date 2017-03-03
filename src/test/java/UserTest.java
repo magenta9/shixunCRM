@@ -49,6 +49,24 @@ public class UserTest {
     }
 
     /**
+     * 批量添加数据
+     */
+    @Test
+    public void testaddUserList() {
+        for(int i=0; i< 50;i++){
+            User user = new User();
+            user.setUserEmail("123326178@qq.com");
+            user.setUserLevel(5);
+            user.setUserScore(100);
+            user.setUserName("boy" + i);
+            user.setUserPassword("123456");
+            user.setUserSex("男");
+            user.setUserPhone("115" + i);
+            userDao.add(user);
+        }
+    }
+
+    /**
      * 测试获取所有数据
      */
     @Test

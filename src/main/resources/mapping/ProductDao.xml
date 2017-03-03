@@ -12,7 +12,7 @@
         <result property="produceBrand" column="p_brand"/>
     </resultMap>
 
-    <insert id="add" parameterType="Product">
+    <insert id="add" parameterType="Product" >
         INSERT INTO product(c_id, p_name, p_price, p_image, p_context, p_brand)
         VALUES(#{catagoryId}, #{produceName}, #{producePrice}, #{produceImage}, #{produceContext}, #{produceBrand});
     </insert>
@@ -24,6 +24,7 @@
         </foreach>
     </insert>
 
+
     <select id="findAll" resultMap="product">
         SELECT * FROM product;
     </select>
@@ -32,7 +33,7 @@
         SELECT * FROM product WHERE c_id=#{cid};
     </select>
     
-    <select id="findbyId" resultMap="product" parameterMap="int">
+    <select id="findbyId" resultMap="product" parameterType="int">
         SELECT * FROM product WHERE p_id=#{p_id};
     </select>
 </mapper>

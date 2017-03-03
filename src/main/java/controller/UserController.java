@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import service.UserService;
@@ -25,10 +26,10 @@ import java.util.Random;
 
 /**
  * Created by alienware on 2017/3/1.
- */
-@Controller
-@RequestMapping(value="/user")
-public class UserController {
+        */
+    @Controller
+    @RequestMapping(value="/user")
+    public class UserController {
 
     @Resource
     private UserService userService;
@@ -38,87 +39,87 @@ public class UserController {
      *  例如首页应该调用 {deployment_name}/users/list/1/15 就是申请获得第一页 一页显示15条
      *  return json序列化的Pagination对象
      */
-    @RequestMapping(value="/list/{pageIndex}/{pageSize}",method= RequestMethod.GET)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public Pagination getUsers(@PathVariable("pageIndex")int pageIndex,@PathVariable("pageSize") int pageSize){
-        return userService.getUsers(pageIndex,pageSize);
-    }
+//    @RequestMapping(value="/list/{pageIndex}/{pageSize}",method= RequestMethod.GET)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.OK)
+//    public Pagination getUsers(@PathVariable("pageIndex")int pageIndex,@PathVariable("pageSize") int pageSize){
+//        return userService.getUsers(pageIndex,pageSize);
+//    }
 
     /**
      *  分页按用户输入的会员名模糊查询返回
      *  例如首页应该调用 {deployment_name}/users/searchByName/girl/1/15 就是申请获得第一页 会员名包含"girl"的会员信息
      *  return json序列化的Pagination对象
      */
-    @RequestMapping(value="/searchByName/{userName}/{pageIndex}/{pageSize}",method=RequestMethod.GET)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public Pagination getUser(@PathVariable("userName") String userName,@PathVariable("pageIndex") int pageIndex ,@PathVariable("pageSize") int pageSize){
-        return userService.getUsers(userName,pageIndex,pageSize);
-    }
+//    @RequestMapping(value="/searchByName/{userName}/{pageIndex}/{pageSize}",method=RequestMethod.GET)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.OK)
+//    public Pagination getUser(@PathVariable("userName") String userName,@PathVariable("pageIndex") int pageIndex ,@PathVariable("pageSize") int pageSize){
+//        return userService.getUsers(userName,pageIndex,pageSize);
+//    }
 
     /**
      *  分页按用户输入的用户名模糊查询返回
      *  例如首页应该调用 {deployment_name}/users/searchByLevel/6/1/15 就是申请获得第一页 会员等级为6的会员信息
      *  return json序列化的Pagination对象
      */
-    @RequestMapping(value="/searchByLevel/{userLevel}/{pageIndex}/{pageSize}",method=RequestMethod.GET)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public Pagination getUser(@PathVariable("userLevel") int userLevel,@PathVariable("pageIndex") int pageIndex ,@PathVariable("pageSize") int pageSize){
-        return userService.getUsers(userLevel,pageIndex,pageSize);
-    }
+//    @RequestMapping(value="/searchByLevel/{userLevel}/{pageIndex}/{pageSize}",method=RequestMethod.GET)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.OK)
+//    public Pagination getUser(@PathVariable("userLevel") int userLevel,@PathVariable("pageIndex") int pageIndex ,@PathVariable("pageSize") int pageSize){
+//        return userService.getUsers(userLevel,pageIndex,pageSize);
+//    }
+
+
 
     /**
      * 会员信息录入 (单条数据插入)
      * 管理员使用
      */
-    @RequestMapping(value="/add",method=RequestMethod.POST)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public boolean  addUser(User user){
-        if(userService.addUser(user)) {
-            System.out.println("");
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+//    @RequestMapping(value="/add",method=RequestMethod.POST)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.OK)
+//    public boolean  addUser(User user){
+//        if(userService.addUser(user)) {
+//            System.out.println("");
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
 
-    @RequestMapping(value="/addUsers",method=RequestMethod.POST)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public int addUser(@RequestParam("file") MultipartFile file){
-        List<User> userList =new ArrayList<User>();
-        int count =0;
-
-        try {
-            Workbook wb = new HSSFWorkbook(file.getInputStream());
-            Sheet sheet = wb.getSheetAt(0);
-            for( int i = 0; i <= sheet.getLastRowNum(); i++ ){
-                Row row = sheet.getRow(i);
-                User user = new User();
-                user.setUserName(row.getCell(0).getStringCellValue());
-                user.setUserPhone(row.getCell(1).getStringCellValue());
-                user.setUserEmail(row.getCell(2).getStringCellValue());
-                user.setUserLevel((int)row.getCell(3).getNumericCellValue());
-                user.setUserScore((int)row.getCell(4).getNumericCellValue());
-                user.setUserPassword(row.getCell(5).getStringCellValue());
-                user.setUserSex(row.getCell(6).getStringCellValue());
-
-
-                userList.add(user);
-                count++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //开始插入用户
-        userService.addUser(userList);
-        return count;
-    }
+//    @RequestMapping(value="/addUsers",method=RequestMethod.POST)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.OK)
+//    public int addUser(@RequestParam("file") MultipartFile file){
+//        List<User> userList =new ArrayList<User>();
+//        int count =0;
+//
+//        try {
+//            Workbook wb = new HSSFWorkbook(file.getInputStream());
+//            Sheet sheet = wb.getSheetAt(0);
+//            for( int i = 0; i <= sheet.getLastRowNum(); i++ ){
+//                Row row = sheet.getRow(i);
+//                User user = new User();
+//                user.setUserName(row.getCell(0).getStringCellValue());
+//                user.setUserPhone(row.getCell(1).getStringCellValue());
+//                user.setUserEmail(row.getCell(2).getStringCellValue());
+//                user.setUserLevel((int)row.getCell(3).getNumericCellValue());
+//                user.setUserScore((int)row.getCell(4).getNumericCellValue());
+//                user.setUserPassword(row.getCell(5).getStringCellValue());
+//                user.setUserSex(row.getCell(6).getStringCellValue());
+//                userList.add(user);
+//                count++;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //开始插入用户
+//        userService.addUser(userList);
+//        return count;
+//    }
 
     /**
      * 会员微信自主注册
@@ -208,4 +209,98 @@ public class UserController {
     }
 
 
+    /***************************************************************************************************************************************/
+    /**
+     * 导入excel文件批量传入会员数据
+     * @param file excel文件
+     * @return
+     */
+    @RequestMapping(value="/addUsers",method=RequestMethod.POST)
+    public String addUser(@RequestParam("file") MultipartFile file){
+        List<User> userList =new ArrayList<User>();
+        int count =0;
+        try {
+            Workbook wb = new HSSFWorkbook(file.getInputStream());
+            Sheet sheet = wb.getSheetAt(0);
+            for( int i = 0; i <= sheet.getLastRowNum(); i++ ){
+                Row row = sheet.getRow(i);
+                User user = new User();
+                user.setUserName(row.getCell(0).getStringCellValue());
+                user.setUserPhone(row.getCell(1).getStringCellValue());
+                user.setUserEmail(row.getCell(2).getStringCellValue());
+                user.setUserLevel((int)row.getCell(3).getNumericCellValue());
+                user.setUserScore((int)row.getCell(4).getNumericCellValue());
+                user.setUserPassword(row.getCell(5).getStringCellValue());
+                user.setUserSex(row.getCell(6).getStringCellValue());
+                userList.add(user);
+                count++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //开始插入会员
+        userService.addUser(userList);
+        return "redirect:/user/list";
+    }
+
+    /**
+     * 添加用户信息
+     * @return
+     */
+    @RequestMapping(value="/add",method=RequestMethod.POST)
+    public String addUser(User user){
+        userService.addUser(user);
+        return "redirect:/user/list";
+    }
+
+    /**
+     * 按条件获取会员列表
+     * @param currentPage 当前页
+     * @param pageSize 每页条数
+     * @param radio 单选按钮的值（1：代表按会员名查 2：代表按按会员等级查
+     * @param condition 搜索条件
+     * @param map
+     * @return
+     */
+    @RequestMapping(value="/list")
+    public String getUsers
+        (@RequestParam(value = "currentPage",defaultValue = "1") int currentPage ,
+         @RequestParam(value = "pageSize",required = false,defaultValue = "15") Integer pageSize,
+         @RequestParam(value = "radio", required = false) Integer radio,
+         @RequestParam(value = "condition",required = false) String condition,
+         ModelMap map){
+
+        //定义查询参数
+        StringBuilder queryParames = new StringBuilder();
+        queryParames.append("list");
+        queryParames.append("?pageSize=" + pageSize);
+
+        //分页类
+        Pagination pagination = null;
+
+        //如果条件不为空，且单选按钮有值
+        if(null != radio && null !=condition && "" != condition){
+            queryParames.append("&radio=" + radio);
+            queryParames.append("&condition=" +condition );
+
+            if (radio == 1){
+                pagination = userService.getUsers(condition,currentPage,pageSize);
+
+            }else if(radio == 2){
+                pagination = userService.getUsers(Integer.parseInt(condition),currentPage,pageSize);
+            }
+
+            map.addAttribute("radio",radio);
+            map.addAttribute("condition",condition);
+        }else{
+            pagination = userService.getUsers(currentPage,pageSize);
+        }
+        map.addAttribute("pagination",pagination);
+        map.addAttribute("queryParames",queryParames);
+        //System.out.println(queryParames);
+        return "/user/list";
+    }
+
+    /***********************************************************************************************************************************/
 }

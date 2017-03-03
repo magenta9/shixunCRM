@@ -28,7 +28,7 @@ public class User implements Serializable {
     private String userEmail;
     private String userPhone;
     private int userScore;
-    private int userLevel;
+    private int userLevel = 1;
     private String userCreateData;
     private String userImageId;
     private int isDeleted = 0;

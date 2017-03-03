@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
+
 /**
  * Created by magenta9 on 2017/2/28.
  */
@@ -29,10 +31,28 @@ public class MessageBoardTest {
     }
 
     @Test
-    public void testUpdateAndFind() {
-        MessageBoard messageBoard = messageBoardDao.findAll().get(0);
-        messageBoard.setState(1);
-        System.out.println(messageBoardDao.update(messageBoard));
+    public void testGetCount() {
+        System.out.println(messageBoardDao.getTotalCount());
+        System.out.println(messageBoardDao.getTotalCountbyName("gir"));
+        System.out.println(messageBoardDao.getTotalCountbyState(0));
+    }
+
+    @Test
+    public void testfind() {
+        List<MessageBoard> list = messageBoardDao.findAll(0, 20);
+        for (MessageBoard messageBoard : list) {
+            System.out.println(messageBoard.getUserName() + "2222222222" + messageBoard.getMessage());
+        }
+
+        list = messageBoardDao.findMessagebydState(0, 0, 20);
+        for (MessageBoard messageBoard : list) {
+            System.out.println(messageBoard.getUserName() + "2222222222" + messageBoard.getMessage());
+        }
+
+        list = messageBoardDao.findMessagebyName("gir", 0, 20);
+        for (MessageBoard messageBoard : list) {
+            System.out.println(messageBoard.getUserName() + "2222222222" + messageBoard.getMessage());
+        }
     }
 
 }

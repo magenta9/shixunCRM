@@ -15,10 +15,18 @@ import java.io.Serializable;
 public class MessageBoard implements Serializable {
     private int messageId;
     private int userId;
+    private String userName;
     private String message;
     private String date;
     private int state;  //0:未受理,1:处理中,2.已处理
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
     public int getMessageId() {
         return messageId;
     }

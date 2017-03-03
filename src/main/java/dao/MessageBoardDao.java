@@ -1,6 +1,7 @@
 package dao;
 
 import entity.MessageBoard;
+import entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,7 +13,9 @@ public interface MessageBoardDao {
 
     int getTotalCount();
 
-    int getTotalCountbyState(@Param("state")int state);
+    int getTotalCountbyState(@Param("state") int state);
+
+    int getTotalCountbyName(@Param("name") String name);
 
     int add(MessageBoard messageBoard);
 
@@ -20,13 +23,10 @@ public interface MessageBoardDao {
 
     int addList(List<MessageBoard> messageBoards);
 
-    List<MessageBoard> findAll();
+    List<MessageBoard> findAll(@Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
-    List<MessageBoard> listAll(@Param("offSet")int offSet, @Param("pageSize")int pageSize);
+    List<MessageBoard> findMessagebydState(@Param("state") int state, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
-    List<MessageBoard> findMessagebydState(int state);
+    List<MessageBoard> findMessagebyName(@Param("name") String name, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
-    List<MessageBoard> findMessageLNotSolved();
-
-    List<MessageBoard> list(@Param("offSet")int offSet, @Param("pageSize")int pageSize, @Param("state")int state);
 }

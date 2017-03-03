@@ -31,17 +31,17 @@ public interface UserDao {
     int getTotalCount();
 
     //分页查询user信息表
-    List<User> list(@Param("offSet")int offSet, @Param("pageSize")int pageSize);
+    List<User> list(@Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
     //返回当前表中符合会员名搜索的条数（在条数过多的时候分页返回）
-    int getCount(@Param("uname")String uname);
+    int getCount(@Param("uname") String uname);
 
     //按用户名模糊查询
-    List<User> serachByUname(@Param("uname")String uname,@Param("offSet")int offSet, @Param("pageSize")int pageSize);
+    List<User> serachByUname(@Param("uname") String uname, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
     //获得某个等级下会员的数量
-    int getCountByLevel(@Param("level")int level);
+    int getCountByLevel(@Param("level") int level);
 
     //按会员等级分页返回会员信息
-    List<User> searchUsersByLevel(@Param("level")int level, @Param("offSet")int offSet, @Param("pageSize")int pageSize);
+    List<User> searchUsersByLevel(@Param("level") int level, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 }

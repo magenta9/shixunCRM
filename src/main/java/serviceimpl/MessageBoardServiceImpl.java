@@ -3,6 +3,8 @@ package serviceimpl;
 import dao.MessageBoardDao;
 import entity.MessageBoard;
 import entity.MessageBoardPagination;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import service.MessageBoardService;
 import util.Pagination;
 
@@ -12,6 +14,8 @@ import java.util.List;
 /**
  * Created by magenta9 on 2017/3/2.
  */
+@Service
+@Transactional
 public class MessageBoardServiceImpl implements MessageBoardService{
 
     @Resource
@@ -21,27 +25,27 @@ public class MessageBoardServiceImpl implements MessageBoardService{
     public Pagination getMessages(int pageIndex, int pageSize) {
         int totalCount = messageBoardDao.getTotalCount();
         Pagination pagination = new MessageBoardPagination(pageIndex, pageSize, totalCount);
-        List<MessageBoard> list = messageBoardDao.listAll((pageIndex-1)*pageSize, pageSize);
+        List<MessageBoard> list = messageBoardDao.findAll((pageIndex-1)*pageSize, pageSize);
         pagination.setItems(list);
         pagination.countTotalPageNum();
         return pagination;
     }
 
     @Override
-    public Pagination getMessagesNotSolved(int pageIndex, int pageSize) {
-        int totalCount = messageBoardDao.getTotalCountbyState(0) + messageBoardDao.getTotalCountbyState(1);
+    public Pagination getMessagebyState(int pageIndex, int pageSize, int state) {
+        int totalCount = messageBoardDao.getTotalCountbyState(state);
         Pagination pagination = new MessageBoardPagination(pageIndex, pageSize, totalCount);
-        List<MessageBoard> list = messageBoardDao.findMessageLNotSolved();
+        List<MessageBoard> list = messageBoardDao.findMessagebydState(state, (pageIndex-1)*pageSize, pageSize);
         pagination.setItems(list);
         pagination.countTotalPageNum();
         return pagination;
     }
 
     @Override
-    public Pagination getMessagesNeedTreat(int pageIndex, int pageSize) {
-        int totalCount = messageBoardDao.getTotalCountbyState(0);
+    public Pagination getMessagebyName(int pageIndex, int pageSize, String name) {
+        int totalCount = messageBoardDao.getTotalCountbyName(name);
         Pagination pagination = new MessageBoardPagination(pageIndex, pageSize, totalCount);
-        List<MessageBoard> list = messageBoardDao.findMessagebydState(0);
+        List<MessageBoard> list = messageBoardDao.findMessagebyName(name, (pageIndex-1)*pageSize, pageSize);
         pagination.setItems(list);
         pagination.countTotalPageNum();
         return pagination;
@@ -63,6 +67,6 @@ public class MessageBoardServiceImpl implements MessageBoardService{
 
     @Override
     public boolean updateMessage(MessageBoard messageBoard) {
-        return false;
+        return messageBoardDao.update(messageBoard)!=-1;
     }
 }

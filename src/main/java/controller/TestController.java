@@ -12,13 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
 
     @ResponseBody
-    @RequestMapping("/hello")
     public String hello() {
         return "/view/Hello.html";
-    }
-
-    @RequestMapping("/test")
-    public String test() {
-        return "/test";
     }
 }

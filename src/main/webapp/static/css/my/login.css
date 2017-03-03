@@ -1,0 +1,18 @@
+body{
+	background-color: #34495e;
+}
+
+.login-form{
+	margin-top: 200px;
+	width: 500px;
+	height: 400px
+}
+
+.login-form input{
+	margin-bottom: 30px;
+}
+
+#div_forget_password{
+	text-align: center;
+	margin-top: 30px;
+}

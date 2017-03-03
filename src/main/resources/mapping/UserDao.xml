@@ -33,7 +33,7 @@
     </select>
 
     <select id="findAll" resultMap="user1">
-        SELECT * FROM `user` WHERE is_deleted=0;
+        SELECT * FROM `user` WHERE is_deleted=0 ORDER BY u_createdate;
     </select>
 
     <select id="findbyNameAndPwd" resultType="int">
@@ -67,15 +67,15 @@
     </select>
 
     <select id="list" resultMap="user1">
-        SELECT * FROM USER  ORDER BY U_CREATEDATE LIMIT #{offSet} , #{pageSize};
+        SELECT * FROM USER  ORDER BY U_CREATEDATE DESC LIMIT #{offSet} , #{pageSize};
     </select>
 
     <select id="getCount" resultType="int" >
-        SELECT COUNT(*) FROM USER WHERE U_NAME LIKE "%"#{uname}"%";
+        SELECT COUNT(*) FROM USER WHERE U_NAME LIKE "%${uname}%";
     </select>
 
     <select id="serachByUname" resultMap="user1">
-        SELECT * FROM USER  WHERE U_NAME LIKE "%"#{uname}"%" LIMIT #{offSet} , #{pageSize};
+        SELECT * FROM USER  WHERE U_NAME LIKE "%${uname}%" ORDER BY u_createdate DESC LIMIT #{offSet} , #{pageSize};
     </select>
 
     <select id="getCountByLevel" resultType="int" parameterType="int">
@@ -83,7 +83,7 @@
     </select>
 
     <select id="searchUsersByLevel" resultMap="user1">
-        SELECT * FROM USER  WHERE u_level = #{level} LIMIT #{offSet} , #{pageSize};
+        SELECT * FROM USER  WHERE u_level = #{level} ORDER BY u_createdate DESC LIMIT #{offSet} , #{pageSize};
     </select>
 
 </mapper>

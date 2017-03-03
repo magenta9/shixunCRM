@@ -12,11 +12,11 @@ public interface MessageBoardService {
     //分页获取所有留言板信息
     public Pagination getMessages(int pageIndex, int pageSize);
 
-    //分页获取待处理和处理中的信息
-    public Pagination getMessagesNotSolved(int pageIndex, int pageSize);
+    //分页根据状态获取留言板信息
+    public Pagination getMessagebyState(int pageIndex, int pageSize, int state);
 
-    //分页获取待处理的信息
-    public Pagination getMessagesNeedTreat(int pageIndex, int pageSize);
+    //分页模糊搜索姓名获取留言板信息
+    public Pagination getMessagebyName(int pageIndex, int pageSize, String name);
 
     //添加一条处理消息
     boolean addMessage(MessageBoard messageBoard);
@@ -26,4 +26,6 @@ public interface MessageBoardService {
 
     //更新消息的处理状态
     boolean updateMessage(MessageBoard messageBoard);
+
+
 }

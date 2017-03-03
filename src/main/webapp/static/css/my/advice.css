@@ -1,0 +1,27 @@
+﻿body{
+	padding-top: 70px;
+}
+
+#div_advice .div_danger{
+	border-right: 1px solid #ebccd1;
+}
+
+#div_advice .div_warning{
+	border-right: 1px solid #faebcc;
+}
+
+#div_advice .div_success{
+	border-right: 1px solid #d6e9c6;
+}
+
+.div_main .div_search{
+	margin-top: 50px;
+}
+
+.div_main .div_search .span_tag{
+	font-size: 14px;
+	color: #C7C7C7;
+}
+
+
+

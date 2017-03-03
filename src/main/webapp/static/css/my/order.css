@@ -1,0 +1,32 @@
+
+body{
+	padding-top: 70px;
+}
+
+.div_main .div_search{
+	margin-top: 50px;
+}
+
+
+#div_order table td{
+	margin-left: 50px;
+}
+
+.div_right{
+	width: 250px;
+	position: fixed;
+	right: 50px;
+	top: 100px;
+	-moz-box-shadow:5px 5px 5px #888888; /* 老的 Firefox */
+	box-shadow: 5px 5px 5px #888888;
+}
+
+.div_right .div_img{
+	text-align: center;
+}
+.div_right .div_img img{
+	width: 70px;
+	height: 70px;
+	border-radius:35px;
+}
+
