@@ -31,5 +31,11 @@ public interface UserService {
     //按一个id集合进行删除用户
     boolean deleteUser(List<Integer> uIds);
 
+    //更新一个用户的信息
+    boolean updateUser(User user);
+
+    //根据用户的id获得唯一的一个会员对象
+    User getUserByUid(int userId);
+
 
 }

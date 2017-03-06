@@ -62,4 +62,12 @@ public class TestUserService {
         if(userService.deleteUser(ids));
             System.out.println("Batch delete success");
     }
+
+    @Test
+    public void testUpdateUser(){
+        User user =userService.getUserByUid(4);
+        user.setUserEmail("18896583964@qq.com");
+        if(userService.updateUser(user))
+            System.out.println("更新成功");
+    }
 }

@@ -26,7 +26,7 @@ public class UserTest {
     /**
      * 测试id查询
      */
-//    @Test
+    @Test
     public void testFindbyId() {
         User user = userDao.findById(1);
         System.out.println(user.getUserName() + user.getUserEmail());
