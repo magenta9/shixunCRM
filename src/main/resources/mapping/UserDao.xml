@@ -13,12 +13,13 @@
         <result property="userLevel" column="u_level"/>
         <result property="userCreateData" column="u_createdate"/>
         <result property="isDeleted" column="is_deleted"/>
-        <result property="userImageId" column="u_image_id"/>
+        <result property="userImageUrl" column="u_image_url"/>
+        <result property="openId" column="open_id"></result>
     </resultMap>
 
     <insert id="add" parameterType="User" >
-        INSERT INTO user(`u_name`, `u_password`, `u_sex`, `u_email`, `u_phone`, `u_score`, `u_level`, `is_deleted`, `u_image_id`)
-        VALUES(#{userName}, #{userPassword}, #{userSex}, #{userEmail},#{userPhone}, #{userScore}, #{userLevel}, #{isDeleted}, #{userImageId});
+        INSERT INTO user(`u_name`, `u_password`, `u_sex`, `u_email`, `u_phone`, `u_score`, `u_level`, `is_deleted`, `u_image_url`,`open_id`)
+        VALUES(#{userName}, #{userPassword}, #{userSex}, #{userEmail},#{userPhone}, #{userScore}, #{userLevel}, #{isDeleted}, #{userImageUrl},#{openId});
     </insert>
 
     <insert id="addList" parameterType="User">
@@ -39,6 +40,14 @@
     <select id="findbyNameAndPwd" resultType="int">
         SELECT COUNT(*) FROM `user` WHERE u_name=#{arg0} AND u_password=#{arg1} AND is_deleted=0;
     </select>
+    
+    <select id="getUserByNameAndPwd" resultMap="user1">
+        SELECT * FROM `USER` WHERE u_name=#{arg0} AND u_password=#{arg1} AND is_deleted=0;
+    </select>
+    
+    <select id="findUserByOpenId" resultMap="user1">
+       SELECT * FROM `USER` WHERE OPEN_ID=#{arg0} AND is_deleted=0;
+    </select>
 
     <update id="update" parameterType="User">
         UPDATE user
@@ -49,7 +58,8 @@
             u_phone=#{userPhone},
             u_score=#{userScore},
             u_level=#{userLevel},
-            is_deleted=#{isDeleted}
+            is_deleted=#{isDeleted},
+            open_id=#{openId}
         </set>
         WHERE u_id=#{userId};
     </update>
@@ -57,9 +67,16 @@
     <update id="del" parameterType="User">
         UPDATE user set is_deleted=1 WHERE u_id=#{userId};
     </update>
+    
+    <update id="delUsers" >
+        UPDATE USER SET is_deleted=1 WHERE u_id IN
+        <foreach item="item" index ="index" collection="list" open="(" separator="," close=")" >
+            #{item}
+        </foreach>
+    </update>
 
     <update id="addImage" parameterType="User">
-        UPDATE user set u_image_id=#{userImageId} WHERE u_id=#{userId};
+        UPDATE user set u_image_url=#{userImageUrl} WHERE u_id=#{userId};
     </update>
     
     <select id="getTotalCount" resultType="int">

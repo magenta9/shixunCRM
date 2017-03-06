@@ -1,4 +1,4 @@
-package util;
+package wechat.util;
 
 import org.junit.Test;
 
@@ -56,8 +56,4 @@ public class HttpGetDataUtil {
         return result;
     }
 
-    @Test
-    public void test() {
-        String str = HttpGetDataUtil.sendGet("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxc780fc7378aafeb0&secret=f6ae8731932922204d8a72760b2066a4");
-    }
 }

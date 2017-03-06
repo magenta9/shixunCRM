@@ -24,4 +24,24 @@ public interface UserService {
     //批量插入会员
     int addUser(List<User> userList);
 
+    //按id删除会员信息
+    boolean deleteUser(int userId);
+
+
+    //按一个id集合进行删除用户
+    boolean deleteUser(List<Integer> uIds);
+
+    //更新一个用户的信息
+    boolean updateUser(User user);
+
+    //根据用户的id获得唯一的一个会员对象
+    User getUserByUid(int userId);
+
+    //根据openid获取唯一会员对象
+    User getUserByOpenId(String openId);
+
+    //根据用户名和密码返回会员对象(唯一)
+    User getUserByUnameAndPwd(String name,String password);
+
+
 }

@@ -1,5 +1,6 @@
 package service;
 
+import entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -7,6 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.Pagination;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alienware on 2017/3/1.
@@ -41,5 +44,30 @@ public class TestUserService {
         System.out.println("当前页预计显示条数:"+up.getPageSize());
         System.out.println("当前页实际显示条数:"+up.getItems().size());
 
+    }
+
+    @Test
+    public void testDeleteUserById(){
+        if(userService.deleteUser(10))
+            System.out.println("delete success");
+
+    }
+
+    @Test
+    public void testBatchDelete(){
+        List<Integer> ids = new ArrayList<Integer>();
+        ids.add(1);
+        ids.add(2);
+        ids.add(3);
+        if(userService.deleteUser(ids));
+            System.out.println("Batch delete success");
+    }
+
+    @Test
+    public void testUpdateUser(){
+        User user =userService.getUserByUid(4);
+        user.setUserEmail("18896583964@qq.com");
+        if(userService.updateUser(user))
+            System.out.println("更新成功");
     }
 }

@@ -8,12 +8,4 @@ import com.google.gson.JsonNull;
  */
 public class GsonUtil {
     public static Gson gson = new Gson();
-
-    public static String toJson(Object src) {
-        if(src == null) {
-            return gson.toJson(JsonNull.INSTANCE);
-        }
-        return gson.toJson(src);
-    }
-
 }
