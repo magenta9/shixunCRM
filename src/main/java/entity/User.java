@@ -30,8 +30,9 @@ public class User implements Serializable {
     private int userScore;
     private int userLevel = 1;
     private String userCreateData;
-    private String userImageId;
+    private String userImageUrl;
     private int isDeleted = 0;
+    private String openId;
 
     public int getUserId() {
         return userId;
@@ -41,12 +42,12 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserImageId() {
-        return userImageId;
+    public String getUserImageUrl() {
+        return userImageUrl;
     }
 
-    public void setUserImageId(String userImageId) {
-        this.userImageId = userImageId;
+    public void setUserImageUrl(String userImageUrl) {
+        this.userImageUrl = userImageUrl;
     }
 
     public String getUserName() {
@@ -119,5 +120,31 @@ public class User implements Serializable {
 
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userSex='" + userSex + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", userScore=" + userScore +
+                ", userLevel=" + userLevel +
+                ", userCreateData='" + userCreateData + '\'' +
+                ", userImageUrl='" + userImageUrl + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", openId='" + openId + '\'' +
+                '}';
     }
 }

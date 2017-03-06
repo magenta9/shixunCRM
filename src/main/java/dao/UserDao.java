@@ -22,10 +22,13 @@ public interface UserDao {
 
     int findbyNameAndPwd(String name, String password);
 
+    User getUserByNameAndPwd(String name,String password);
+
+    User findUserByOpenId(String openId);
+
     int addList(List<User> users);
 
     int addImage(User user);
-
 
     //返回当前的会员注册数量
     int getTotalCount();

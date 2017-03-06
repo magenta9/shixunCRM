@@ -108,6 +108,16 @@ public class UserServicesImpl implements UserService{
         return userDao.findById(userId);
     }
 
+    @Override
+    public User getUserByOpenId(String openId) {
+
+        return userDao.findUserByOpenId(openId);
+    }
+
+    @Override
+    public User getUserByUnameAndPwd(String name, String password) {
+        return userDao.getUserByNameAndPwd(name,password);
+    }
 
 
 }

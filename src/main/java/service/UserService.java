@@ -37,5 +37,11 @@ public interface UserService {
     //根据用户的id获得唯一的一个会员对象
     User getUserByUid(int userId);
 
+    //根据openid获取唯一会员对象
+    User getUserByOpenId(String openId);
+
+    //根据用户名和密码返回会员对象(唯一)
+    User getUserByUnameAndPwd(String name,String password);
+
 
 }
