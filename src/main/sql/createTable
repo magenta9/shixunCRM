@@ -10,7 +10,8 @@ CREATE TABLE `user` (
   `U_level` int(1) DEFAULT NULL,			# 客户等级
   `u_createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,# 创建时间
   `is_deleted` tinyint(1) DEFAULT NULL,		# 是否删除
-  `u_image_id` varchar(100) DEFAULT NULL,   # 图片编号
+  `u_image_url` varchar(100) DEFAULT NULL,   # 图片地址
+  `open_id` varchar(30)  UNIQUE DEFAULT NULL,       # 微信openid
   PRIMARY KEY (`u_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

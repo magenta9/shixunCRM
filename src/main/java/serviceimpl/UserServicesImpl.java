@@ -87,6 +87,37 @@ public class UserServicesImpl implements UserService{
         return userDao.addList(userList);
     }
 
+    @Override
+    public boolean deleteUser(int userId) {
+        return userDao.del(userDao.findById(userId))==-1?false:true;
+    }
+
+    @Override
+    public boolean deleteUser(List<Integer> uIds) {
+
+        return userDao.delUsers(uIds)== uIds.size()?true:false;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return userDao.update(user)!=-1?true:false;
+    }
+
+    @Override
+    public User getUserByUid(int userId) {
+        return userDao.findById(userId);
+    }
+
+    @Override
+    public User getUserByOpenId(String openId) {
+
+        return userDao.findUserByOpenId(openId);
+    }
+
+    @Override
+    public User getUserByUnameAndPwd(String name, String password) {
+        return userDao.getUserByNameAndPwd(name,password);
+    }
 
 
 }

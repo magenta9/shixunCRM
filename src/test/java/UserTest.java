@@ -26,7 +26,7 @@ public class UserTest {
     /**
      * 测试id查询
      */
-//    @Test
+    @Test
     public void testFindbyId() {
         User user = userDao.findById(1);
         System.out.println(user.getUserName() + user.getUserEmail());
@@ -45,6 +45,7 @@ public class UserTest {
         user.setUserPassword("123456");
         user.setUserSex("女");
         user.setUserPhone("115");
+        user.setOpenId("abcdefghijklmn");
         System.out.println(userDao.add(user));
     }
 
@@ -85,6 +86,19 @@ public class UserTest {
         int row = userDao.findbyNameAndPwd("zhang1", "123456");
         System.out.println(row);
     }
+    @Test
+    public void testGetUserByNameAndPwd(){
+        User user = userDao.getUserByNameAndPwd("girl","123456");
+        if(user!=null)
+            System.out.println(user);
+    }
+
+    @Test
+    public void testGetUserByOpenId(){
+        User user =userDao.findUserByOpenId("abcdefghijklmn");
+        if(user!=null)
+            System.out.println(user);
+    }
 
     /**
      * 测试更新用户数据
@@ -108,7 +122,7 @@ public class UserTest {
     @Test
     public void testAddImage() {
         User user = userDao.findById(2);
-        user.setUserImageId("../images/absdsdsd.jpg");
+        user.setUserImageUrl("../images/absdsdsd.jpg");
         System.out.println(userDao.addImage(user));
     }
 

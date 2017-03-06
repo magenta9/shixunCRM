@@ -22,10 +22,13 @@ public interface UserDao {
 
     int findbyNameAndPwd(String name, String password);
 
+    User getUserByNameAndPwd(String name,String password);
+
+    User findUserByOpenId(String openId);
+
     int addList(List<User> users);
 
     int addImage(User user);
-
 
     //返回当前的会员注册数量
     int getTotalCount();
@@ -44,4 +47,7 @@ public interface UserDao {
 
     //按会员等级分页返回会员信息
     List<User> searchUsersByLevel(@Param("level") int level, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
+
+    //根据id集合批量删除用户
+    int delUsers(List<Integer> uIds);
 }
