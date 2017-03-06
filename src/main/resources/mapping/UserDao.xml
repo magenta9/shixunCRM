@@ -57,6 +57,13 @@
     <update id="del" parameterType="User">
         UPDATE user set is_deleted=1 WHERE u_id=#{userId};
     </update>
+    
+    <update id="delUsers" >
+        UPDATE USER SET is_deleted=1 WHERE u_id IN
+        <foreach item="item" index ="index" collection="list" open="(" separator="," close=")" >
+            #{item}
+        </foreach>
+    </update>
 
     <update id="addImage" parameterType="User">
         UPDATE user set u_image_id=#{userImageId} WHERE u_id=#{userId};

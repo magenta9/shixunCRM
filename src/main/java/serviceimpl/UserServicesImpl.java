@@ -87,6 +87,16 @@ public class UserServicesImpl implements UserService{
         return userDao.addList(userList);
     }
 
+    @Override
+    public boolean deleteUser(int userId) {
+        return userDao.del(userDao.findById(userId))==-1?false:true;
+    }
+
+    @Override
+    public boolean deleteUser(List<Integer> uIds) {
+
+        return userDao.delUsers(uIds)== uIds.size()?true:false;
+    }
 
 
 }

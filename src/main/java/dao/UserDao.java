@@ -44,4 +44,7 @@ public interface UserDao {
 
     //按会员等级分页返回会员信息
     List<User> searchUsersByLevel(@Param("level") int level, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
+
+    //根据id集合批量删除用户
+    int delUsers(List<Integer> uIds);
 }

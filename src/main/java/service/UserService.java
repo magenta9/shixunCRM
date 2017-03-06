@@ -24,4 +24,12 @@ public interface UserService {
     //批量插入会员
     int addUser(List<User> userList);
 
+    //按id删除会员信息
+    boolean deleteUser(int userId);
+
+
+    //按一个id集合进行删除用户
+    boolean deleteUser(List<Integer> uIds);
+
+
 }
