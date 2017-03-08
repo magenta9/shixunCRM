@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wechat.service.CoreService;
 import wechat.util.ConnUtil;
+import wechat.util.Oauth2Util;
+import wechat.util.SNSUserInfo;
+import wechat.util.WeixinOauth2Token;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,4 +46,19 @@ public class WeChatController {
         }
     }
 
+    @RequestMapping(value = "/oauth", method = RequestMethod.GET)
+    public String oauth(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("gb2312");
+        response.setCharacterEncoding("gb2312");
+
+        String code = request.getParameter("code");
+        if(!"authdeny".equals(code)) {
+            WeixinOauth2Token weixinOauth2Token = Oauth2Util.getOauth2AccessToken(code);
+            String accesstoken = weixinOauth2Token.getAccessToken();
+            String openid = weixinOauth2Token.getOpenId();
+            request.setAttribute("openid", Oauth2Util.getSNSUserInfo(accesstoken, openid).getOpenId());
+        }
+
+        return "forward:/admin/toLogin";
+    }
 }

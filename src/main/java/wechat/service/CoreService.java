@@ -11,7 +11,9 @@ import service.MessageBoardService;
 import wechat.response.Article;
 import wechat.response.NewsMessage;
 import wechat.response.TextMessage;
+import wechat.util.ConnUtil;
 import wechat.util.MessageUtil;
+import wechat.util.Oauth2Util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -104,17 +106,32 @@ public class CoreService {
                 } else if(eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
                     //TODO 处理菜单单击
                     String eventKey = requestMap.get("EventKey");
-                    if(eventKey.equals("BIND")) {
+                    String str = ConnUtil.Oauth2Address;
+                    str = str.replace("APPID", ConnUtil.appId).replace("SCOPE", "snsapi_userinfo");
+                    if(eventKey.equals("USER")) {
                         String responeXML = "";
-                        Article Article = new Article();
-                        Article.setPicUrl("https://ww2.sinaimg.cn/large/006tKfTcgy1fde33dinc2j30a005kaco.jpg");
-                        Article.setUrl("http://www.weiwoduzun.me/admin/toLogin");
-                        Article.setTitle("注册会员");
-                        Article.setDescription("绑定会员，即可享受多种服务");
+                        Article Article1 = new Article();
+                        Article1.setPicUrl("https://ww2.sinaimg.cn/large/006tKfTcgy1fde33dinc2j30a005kaco.jpg");
+                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/oauth")));
+//                        Article1.setUrl("http://23f25bf7.ittun.com/admin/toLogin?openid=" + fromUserName);
+                        Article1.setTitle("注册会员");
+                        Article1.setDescription("注册会员，即可享受多种服务");
                         List<Article> list = new ArrayList<>();
-                        list.add(Article);
+                        Article Article2 = new Article();
+                        Article2.setPicUrl("https://ww4.sinaimg.cn/large/006tKfTcgy1fdfbzomrzej305k05kjra.jpg");
+                        Article2.setUrl("http://23f25bf7.ittun.com/wechat/oauth");
+                        Article2.setTitle("会员绑定");
+                        Article2.setDescription("绑定会员，即可享受多种服务");
+                        Article Article3 = new Article();
+                        Article3.setPicUrl("https://ww3.sinaimg.cn/large/006tKfTcgy1fdfc1od3s1j305k05kglj.jpg");
+                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/admin/toLogin")));
+                        Article3.setTitle("信息修改");
+                        Article3.setDescription("修改个人信息");
+                        list.add(Article1);
+                        list.add(Article2);
+                        list.add(Article3);
                         NewsMessage newsMessage = new NewsMessage();
-                        newsMessage.setArticleCount(1);
+                        newsMessage.setArticleCount(3);
                         newsMessage.setArticles(list);
                         newsMessage.setCreateTime(new Date().getTime());
                         newsMessage.setFromUserName(toUserName);
@@ -123,6 +140,7 @@ public class CoreService {
                         responeXML = MessageUtil.messageToXml(newsMessage);
                         System.out.println(responeXML);
                         out.print(responeXML);
+                    } else if(eventKey.equals("BIND")) {
 //                        responseContent = "点击<a href=\"http://www.weiwoduzun.me/admin/toLogin\">绑定</a>以绑定会员账号";
                     } else if(eventKey.equals("REGISTER")) {
 //                        responseContent = "点击<a href=\"http://www.weiwoduzun.me/admin/toLogin\">注册</a>进行注册";

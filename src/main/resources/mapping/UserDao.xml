@@ -107,4 +107,12 @@
         SELECT * FROM USER WHERE u_name=#{uname};
     </select>
 
+    <select id="getCountbyEmail" resultType="int">
+        SELECT COUNT(*) FROM USER WHERE u_email=#{email};
+    </select>
+
+    <select id="getCountbyPhone" resultType="int">
+        SELECT COUNT(*) FROM USER WHERE u_phone=#{phone};
+    </select>
+
 </mapper>

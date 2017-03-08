@@ -124,5 +124,19 @@ public class UserServicesImpl implements UserService{
         return userDao.searchByUname(name) == null;
     }
 
+    @Override
+    public boolean judgeUser(User user) {
+        if(!UserNameNotUsed(user.getUserName())) {
+            return false;
+        }
+        if(userDao.getCountbyEmail(user.getUserEmail()) > 0) {
+            return false;
+        }
+        if(userDao.getCountbyPhone(user.getUserPhone()) > 0) {
+            return false;
+        }
+        return true;
+    }
+
 
 }

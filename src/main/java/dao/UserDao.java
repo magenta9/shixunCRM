@@ -26,6 +26,11 @@ public interface UserDao {
 
     User findUserByOpenId(String openId);
 
+
+    int getCountbyEmail(@Param("email") String email);
+
+    int getCountbyPhone(@Param("phone") String phone);
+
     int addList(List<User> users);
 
     int addImage(User user);

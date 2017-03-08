@@ -15,6 +15,7 @@ import wechat.menu.ComplexButton;
 import wechat.menu.Menu;
 import wechat.service.SendMessage;
 import wechat.util.ConnUtil;
+import wechat.util.Oauth2Util;
 
 import java.util.List;
 import java.util.Map;
@@ -119,7 +120,11 @@ public class test {
 
     @Test
     public void testSendMessage() {
-        String jsonTextMsg = SendMessage.makeTextCustomMessage("oibdNwxJvqmM3yVVlQ9iQ4q9kwFQ", "你好");
+        String str = ConnUtil.Oauth2Address;
+        str = str.replace("APPID", ConnUtil.appId).replace("REDIRECT_URI",
+                Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/oauth")).
+                replace("SCOPE", "snsapi_userinfo");
+        String jsonTextMsg = SendMessage.makeTextCustomMessage("oibdNwxhn5J2dMedaH8btQmzECI0", str);
         SendMessage.sendCustomMessage(ConnUtil.getToken(), jsonTextMsg);
     }
 

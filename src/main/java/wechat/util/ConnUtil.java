@@ -21,9 +21,11 @@ import java.util.Map;
  */
 public class ConnUtil {
 
-    private static final String token = "zha";
-    private static String appId = "wx3e4c4513a89d6349";
-    private static String appSecret = "337be68c201b7f72adf4c2d6a686b143";
+    public static final String token = "zha";
+    public static String appId = "wx3e4c4513a89d6349";
+    public static String appSecret = "337be68c201b7f72adf4c2d6a686b143";
+    public static String Oauth2Address = "https://open.weixin.qq.com/connect/oauth2/authorize?" +
+            "appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
 
     public static String getToken() {
         String str = HttpGetDataUtil.sendGet(

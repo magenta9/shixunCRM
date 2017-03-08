@@ -45,4 +45,6 @@ public interface UserService {
 
     //判断用户名是否使用
     boolean UserNameNotUsed(String name);
+
+    boolean judgeUser(User user);
 }
