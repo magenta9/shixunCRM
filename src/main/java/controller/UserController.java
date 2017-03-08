@@ -137,6 +137,23 @@ import java.util.Random;
         return result;
     }
 
+    /**
+     * 用户微信绑定
+     * @param user
+     * @param userImg
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/bind",method=RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public boolean bindUsers(User user,@RequestParam("userImg") MultipartFile userImg, HttpServletRequest request){
+        boolean result =false;
+        //Todo
+
+        return result;
+    }
+
 
 
     @RequestMapping(value="/testfile")

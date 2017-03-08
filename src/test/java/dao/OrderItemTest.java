@@ -1,3 +1,5 @@
+package dao;
+
 import dao.OrderItemDao;
 import entity.OrderItem;
 import org.junit.Before;
@@ -18,6 +20,11 @@ public class OrderItemTest {
     public void before() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring/spring-dao.xml");
         orderItemDao = (OrderItemDao) ctx.getBean("orderItemDao");
+    }
+
+    @Test
+    public void testCount() {
+        System.out.println(orderItemDao.getTotalCount());
     }
 
     @Test

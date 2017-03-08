@@ -1,3 +1,5 @@
+package dao;
+
 import dao.CatagoryDao;
 import dao.MessageBoardDao;
 import entity.MessageBoard;

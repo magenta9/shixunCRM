@@ -1,3 +1,5 @@
+package dao;
+
 import dao.CatagoryDao;
 import entity.Catagory;
 import org.junit.Before;

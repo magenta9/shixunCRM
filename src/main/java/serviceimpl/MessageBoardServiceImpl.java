@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by magenta9 on 2017/3/2.
  */
-@Service
+@Service("messageBoardService")
 @Transactional
 public class MessageBoardServiceImpl implements MessageBoardService{
 

@@ -13,4 +13,8 @@ public interface OrdersDao {
     int add(Orders orders);
 
     int addList(List<Orders> list);
+
+    List<Orders> findAll();
+
+    Orders findbyOrderId(int id);
 }

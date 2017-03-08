@@ -8,6 +8,7 @@ public class Article {
     private String Title;   //图文消息名
     private String Description; //图文消息描述
     private String PicUrl;  //图片链接，(JPG/PNG)
+    private String Url;     //点击图文跳转链接
 
     public String getTitle() {
         return Title;
@@ -40,7 +41,5 @@ public class Article {
     public void setUrl(String url) {
         Url = url;
     }
-
-    private String Url;     //点击图文跳转链接
 
 }

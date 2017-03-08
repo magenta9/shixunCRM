@@ -50,4 +50,7 @@ public interface UserDao {
 
     //根据id集合批量删除用户
     int delUsers(List<Integer> uIds);
+
+    //查找该名字是否已使用
+    User searchByUname(@Param("uname") String uname);
 }

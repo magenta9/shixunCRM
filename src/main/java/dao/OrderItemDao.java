@@ -1,6 +1,8 @@
 package dao;
 
 import entity.OrderItem;
+import entity.Orders;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,8 +18,16 @@ public interface OrderItemDao {
 
     int delbyOrderId(int id);
 
+    int getTotalCount();
+
     List<OrderItem> findAll();
 
+    List<OrderItem> list(@Param("offSet") int offSet, @Param("pageSize") int pageSize);
+
     int addList(List<OrderItem> list);
+
+    int getCountbyOrders(List<Orders> orders);
+
+    List<OrderItem> findbyOrders(@Param("list") List<Orders> orders, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
 }

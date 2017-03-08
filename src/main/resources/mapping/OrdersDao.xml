@@ -14,6 +14,14 @@
         SELECT * FROM orders WHERE u_id=#{id} ORDER BY o_date DESC;
     </select>
 
+    <select id="findbyOrderId" parameterType="int" resultMap="orders">
+        SELECT * FROM orders WHERE o_id=#{ordersId};
+    </select>
+
+    <select id="findAll" resultMap="orders">
+        SELECT * FROM orders ORDER BY o_date DESC;
+    </select>
+
     <insert id="add" parameterType="Orders">
         INSERT INTO orders(o_code, u_id, o_sum, o_discount) VALUES(#{ordersCode}, #{userId}, #{ordersSum}, #{ordersDiscount});
     </insert>

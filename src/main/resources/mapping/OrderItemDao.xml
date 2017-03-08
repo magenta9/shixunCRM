@@ -24,6 +24,22 @@
         </foreach>
     </insert>
 
+    <select id="getCountbyOrders" parameterType="Orders" resultType="int">
+        SELECT COUNT(*) FROM orderitem WHERE order_id IN (
+        <foreach collection="list" index="index" item="orders" separator=",">
+            #{orders.ordersId}
+        </foreach>
+        )
+    </select>
+
+    <select id="findbyOrders" parameterType="Orders" resultMap="oi">
+        SELECT * FROM orderitem WHERE order_id IN (
+        <foreach collection="list" index="index" item="orders" separator=",">
+            #{orders.ordersId}
+        </foreach>
+        ) LIMIT #{offSet} , #{pageSize};
+    </select>
+
     <delete id="del" parameterType="OrderItem">
         DELETE FROM orderitem WHERE o_id=#{orderItemId};
     </delete>
@@ -34,5 +50,13 @@
 
     <select id="findAll" resultMap="oi">
         SELECT * FROM orderitem;
+    </select>
+
+    <select id="list" resultMap="oi">
+        SELECT * FROM orderitem LIMIT #{offSet} , #{pageSize};
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM orderitem;
     </select>
 </mapper>

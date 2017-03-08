@@ -119,7 +119,7 @@ public class test {
 
     @Test
     public void testSendMessage() {
-        String jsonTextMsg = SendMessage.makeTextCustomMessage("oibdNwxhn5J2dMedaH8btQmzECI0", "<a href=\"http://www.baidu.com\">注册会员</a>");
+        String jsonTextMsg = SendMessage.makeTextCustomMessage("oibdNwxJvqmM3yVVlQ9iQ4q9kwFQ", "你好");
         SendMessage.sendCustomMessage(ConnUtil.getToken(), jsonTextMsg);
     }
 

@@ -43,5 +43,6 @@ public interface UserService {
     //根据用户名和密码返回会员对象(唯一)
     User getUserByUnameAndPwd(String name,String password);
 
-
+    //判断用户名是否使用
+    boolean UserNameNotUsed(String name);
 }

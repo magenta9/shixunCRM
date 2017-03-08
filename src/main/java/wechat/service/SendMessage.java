@@ -117,4 +117,23 @@ public class SendMessage {
         return result;
     }
 
+    /**
+     * 发送文本信息
+     * @param openid
+     * @param content
+     */
+    public static void sendTextMessage(String openid, String content) {
+        String jsonTextMsg = SendMessage.makeTextCustomMessage(openid, content);
+        SendMessage.sendCustomMessage(ConnUtil.getToken(), jsonTextMsg);
+    }
+
+    /**
+     * 发送图文消息
+     * @param openid
+     * @param list
+     */
+    public static void sendNewsMessage(String openid, List<Article> list) {
+        String jsonNewsMsg = SendMessage.makeNewsCustomMessage(openid, list);
+        SendMessage.sendCustomMessage(ConnUtil.getToken(), jsonNewsMsg);
+    }
 }

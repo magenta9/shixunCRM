@@ -119,5 +119,10 @@ public class UserServicesImpl implements UserService{
         return userDao.getUserByNameAndPwd(name,password);
     }
 
+    @Override
+    public boolean UserNameNotUsed(String name) {
+        return userDao.searchByUname(name) == null;
+    }
+
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class NewsMessage extends BaseMessage {
     private int ArticleCount;   //图文消息个数，限制10个以内
+    private List<Article> Articles;
 
     public int getArticleCount() {
         return ArticleCount;
@@ -17,12 +18,10 @@ public class NewsMessage extends BaseMessage {
     }
 
     public List<Article> getArticles() {
-        return articles;
+        return Articles;
     }
 
     public void setArticles(List<Article> articles) {
-        this.articles = articles;
+        this.Articles = articles;
     }
-
-    private List<Article> articles;
 }

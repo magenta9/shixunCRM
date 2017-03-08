@@ -9,7 +9,7 @@ import service.AdminService;
 /**
  * Created by magenta9 on 2017/2/28.
  */
-@Service
+@Service("adminService")
 @Transactional
 public class AdminServiceImpl implements AdminService{
 

@@ -38,14 +38,9 @@ public class WeChatController {
         String timestamp = request.getParameter("timestamp");
         String nonce = request.getParameter("nonce");
 
-        PrintWriter out = response.getWriter();
         if (ConnUtil.checkSignature(signature, timestamp, nonce)) {
-            String responseXML = CoreService.processRequest(request);
-            out.print(responseXML);
+            CoreService.processRequest(request, response);
         }
-
-        out.close();
-        out = null;
     }
 
 }

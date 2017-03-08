@@ -103,4 +103,8 @@
         SELECT * FROM USER  WHERE u_level = #{level} ORDER BY u_createdate DESC LIMIT #{offSet} , #{pageSize};
     </select>
 
+    <select id="searchByUname" resultMap="user1">
+        SELECT * FROM USER WHERE u_name=#{uname};
+    </select>
+
 </mapper>

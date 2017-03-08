@@ -1,3 +1,5 @@
+package dao;
+
 import dao.UserDao;
 import entity.User;
 import org.junit.Before;
