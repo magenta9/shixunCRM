@@ -46,5 +46,6 @@ public interface UserService {
     //判断用户名是否使用
     boolean UserNameNotUsed(String name);
 
+    //判断用户名字，email和手机号是否使用
     boolean judgeUser(User user);
 }

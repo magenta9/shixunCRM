@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,11 +47,27 @@ public class WeChatController {
         }
     }
 
-    @RequestMapping(value = "/oauth", method = RequestMethod.GET)
-    public String oauth(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/admin/toLogin";
+    }
+
+    @RequestMapping(value = "/bind", method = RequestMethod.GET)
+    public String bind(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/test/hello";
+    }
+
+    @RequestMapping(value = "/alter", method = RequestMethod.GET)
+    public String alter(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/test/hello";
+    }
+
+    public void addOpenId(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         request.setCharacterEncoding("gb2312");
         response.setCharacterEncoding("gb2312");
-
         String code = request.getParameter("code");
         if(!"authdeny".equals(code)) {
             WeixinOauth2Token weixinOauth2Token = Oauth2Util.getOauth2AccessToken(code);
@@ -58,7 +75,5 @@ public class WeChatController {
             String openid = weixinOauth2Token.getOpenId();
             request.setAttribute("openid", Oauth2Util.getSNSUserInfo(accesstoken, openid).getOpenId());
         }
-
-        return "forward:/admin/toLogin";
     }
 }

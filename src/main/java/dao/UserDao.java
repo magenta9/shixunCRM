@@ -20,19 +20,25 @@ public interface UserDao {
 
     List<User> findAll();
 
+    //查找账户密码是否匹配
     int findbyNameAndPwd(String name, String password);
 
+    //根据账户密码获取用户信息
     User getUserByNameAndPwd(String name,String password);
 
+    //查找openid是否被使用
     User findUserByOpenId(String openId);
 
-
+    //查找emial是否被使用
     int getCountbyEmail(@Param("email") String email);
 
+    //查找手机号是否被使用
     int getCountbyPhone(@Param("phone") String phone);
 
+    //批量添加用户
     int addList(List<User> users);
 
+    //添加图片信息
     int addImage(User user);
 
     //返回当前的会员注册数量

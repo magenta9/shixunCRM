@@ -50,7 +50,9 @@ public class CoreService {
                 textMessage.setCreateTime(new Date().getTime());
                 textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
                 String content = requestMap.get("Content");
-                if(content.substring(0, 2).equals("反馈")) {
+                if(content.length() < 2) {
+                    responseContent = "你在说啥子";
+                }else if(content.substring(0, 2).equals("反馈")) {
                     responseContent = "您的反馈已提交，我们会尽快处理。";
                     MessageBoard mb = new MessageBoard();
                     System.out.println(fromUserName + " and " + toUserName);
@@ -112,19 +114,20 @@ public class CoreService {
                         String responeXML = "";
                         Article Article1 = new Article();
                         Article1.setPicUrl("https://ww2.sinaimg.cn/large/006tKfTcgy1fde33dinc2j30a005kaco.jpg");
-                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/oauth")));
+                        Article1.setUrl("http://www.weiwoduzun.me/wechat/toLogin?openid=" + fromUserName);
+//                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/login")));
 //                        Article1.setUrl("http://23f25bf7.ittun.com/admin/toLogin?openid=" + fromUserName);
                         Article1.setTitle("注册会员");
                         Article1.setDescription("注册会员，即可享受多种服务");
                         List<Article> list = new ArrayList<>();
                         Article Article2 = new Article();
                         Article2.setPicUrl("https://ww4.sinaimg.cn/large/006tKfTcgy1fdfbzomrzej305k05kjra.jpg");
-                        Article2.setUrl("http://23f25bf7.ittun.com/wechat/oauth");
+                        Article2.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/bind")));
                         Article2.setTitle("会员绑定");
                         Article2.setDescription("绑定会员，即可享受多种服务");
                         Article Article3 = new Article();
                         Article3.setPicUrl("https://ww3.sinaimg.cn/large/006tKfTcgy1fdfc1od3s1j305k05kglj.jpg");
-                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/admin/toLogin")));
+                        Article3.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/alter")));
                         Article3.setTitle("信息修改");
                         Article3.setDescription("修改个人信息");
                         list.add(Article1);

@@ -17,7 +17,7 @@ public class AdminController {
      */
     @RequestMapping("/toLogin")
     public String toLogin(){
-        System.out.print("111");
+//        System.out.print("111");
 //        System.out.println(request.getParameter("openid"));
         return "/admin/login";
     }
