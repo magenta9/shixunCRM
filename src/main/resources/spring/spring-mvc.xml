@@ -13,8 +13,21 @@
 
     <mvc:annotation-driven />
 
+    <!-- 登录拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/order/**"/>
+            <mvc:mapping path="/user/**"/>
+            <mvc:mapping path="/report/**"/>
+            <mvc:mapping path="/message/**"/>
+            <mvc:exclude-mapping path="/admin/login"/>
+            <bean class="interceptor.AdminInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <mvc:resources mapping="/css/**" location="/static/css/" />
-    <mvc:resources mapping="/images/**" location="/static/images/" />
+    <mvc:resources mapping="/images/**" location="/static/img/" />
     <mvc:resources mapping="/view/**" location="/static/view/" />
     <mvc:resources mapping="/js/**" location="/static/js/"/>
     <mvc:resources mapping="/fonts/**" location="/static/fonts/"/>

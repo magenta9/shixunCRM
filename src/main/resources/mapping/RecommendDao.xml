@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.RecommendDao">
+    <select id="getRecommend" resultType="String">
+        SELECT pro_id FROM PRO_REC WHERE `user_id` = #{userId} and DATE(`create_time`)=DATE(curdate())
+    </select>
+
+    <insert id="insertRecommend" parameterType="recommendItem">
+        INSERT INTO pro_rec(user_id,pro_id) VALUES (${userId},${proId})
+    </insert>
+</mapper>

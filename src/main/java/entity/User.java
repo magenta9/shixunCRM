@@ -33,7 +33,14 @@ public class User implements Serializable {
     private String userImageUrl;
     private int isDeleted = 0;
     private String openId;
+    private String personId;
 
+    public String getPersonId() {
+        return personId;
+    }
+    public void setPersonId(String personId) {
+        this.personId = personId;
+    }
     public int getUserId() {
         return userId;
     }

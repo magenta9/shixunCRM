@@ -1,0 +1,77 @@
+
+#b04 {
+	width: 912px;
+	height: 600px;
+	margin: auto;
+	margin-top: 80px;
+	overflow: hidden;
+}
+
+.div_pic{
+	position: relative;
+}
+
+
+#b04 ul {
+	width: 200%;
+	padding: 0px 0px 0px 0px;
+	list-style: none;
+}
+
+#b04 ul li {
+	display: inline;
+	float: left;
+	-o-background-size: 100% 100%;
+	-ms-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;
+	box-shadow: inset 0 -3px 6px rgba(0,0,0,.1);
+}
+
+.prev{
+	position: absolute;
+	left: 180px;
+	top: 320px;
+}
+
+.next{
+	position: absolute;
+	right: 150px;
+	top: 300px;
+}
+
+.banner .dots {
+		position: absolute;
+		left: 550px;
+		right: 0;
+		bottom: 20px;
+		width: 100%;
+}
+.banner .dots li {
+			display: inline-block;
+			*display: inline;
+			zoom: 1;
+
+			width: 10px;
+			height: 10px;
+			line-height: 10px;
+			margin: 0 4px;
+
+			text-indent: -999em;
+			*text-indent: 0;
+
+			border: 2px solid #fff;
+			border-radius: 6px;
+
+			cursor: pointer;
+			opacity: .4;
+
+			-webkit-transition: background .5s, opacity .5s;
+			-moz-transition: background .5s, opacity .5s;
+			transition: background .5s, opacity .5s;
+		}
+.banner .dots li.active {
+		background: #fff;
+		opacity: 1;
+	}

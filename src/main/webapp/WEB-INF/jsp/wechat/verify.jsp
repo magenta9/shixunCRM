@@ -1,136 +1,169 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: magenta9
-  Date: 2017/3/2
-  Time: 上午10:59
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="java.security.*" %>
-<%@ page import="java.io.*" %>
-<%@ page import="org.w3c.dom.*" %>
-<%@ page import="javax.xml.parsers.*" %>
+<%@page import="java.util.Date" %>
+<%@page import="org.dom4j.Element" %>
+<%@page import="org.dom4j.DocumentHelper" %>
+<%@page import="org.dom4j.Document" %>
+<%@page import="java.io.IOException" %>
+<%@page import="java.io.InputStreamReader" %>
+<%@page import="java.io.BufferedReader" %>
+<%@page import="java.io.Reader" %>
+<%@page import="java.security.MessageDigest" %>
+<%@page import="java.util.Arrays" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
-    Enumeration parameterNames = request.getParameterNames();
-    String parameterName = null;
-    String parameterValue = null;
-    while (parameterNames.hasMoreElements()) {
-        parameterName = (String) parameterNames.nextElement();
-        parameterValue = request.getParameter(parameterName);
-        System.out.println("weixin_test-param:" + parameterName + "=" + parameterValue);
-    }
-
-
-    String TOKEN = "zha";
-    String echostr = request.getParameter("echostr");
-    String signature = request.getParameter("signature");
-    String timestamp = request.getParameter("timestamp");
-    String nonce = request.getParameter("nonce");
-    System.out.println("weixin_test:echostr=" + echostr + ",signature=" + signature + ",timestamp=" + timestamp + ",nonce=" + nonce);
-    List values = new ArrayList();
-    values.add(TOKEN);
-    values.add(timestamp);
-    values.add(nonce);
-    Collections.sort(values);
-    StringBuffer content = new StringBuffer();
-    for (int i = 0; i < values.size(); i++) {
-        content.append(values.get(i));
-    }
-    MessageDigest md = MessageDigest.getInstance("SHA-1");
-    byte[] b = md.digest(content.toString().getBytes("UTF-8"));
-    String stmp = "";
-    StringBuffer signInfo = new StringBuffer();
-    for (int n = 0; n < b.length; n++) {
-        stmp = Integer.toHexString(b[n] & 0XFF);
-        if (stmp.length() == 1) {
-            signInfo.append("0");
-            signInfo.append(stmp);
-        } else {
-            signInfo.append(stmp);
-        }
-    }
-
-
-    System.out.println("weixin_test:signInfo=" + signInfo + ",signature=" + signature);
-    if (signInfo.toString().equals(signature)) {
-        out.clear();
-        out.print(echostr);
-
-        System.out.println("weixin_test(001):ok");
-
-//receive user's message from weixin platform
-        BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream()));
-        String line = null;
-        StringBuffer sb = new StringBuffer();
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-        System.out.println("weixin_message:" + sb.toString());
-
-//recieved message :text
-        if (sb.length() > 0) {
-            Element root = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(sb.toString().getBytes("UTF-8"))).getDocumentElement();
-            NodeList nodes = root.getChildNodes();
-            int count = nodes.getLength();
-            String textContent = null;
-            String FromUserName = null;
-            String ToUserName = null;
-            boolean isText = false;
-            for (int i = 0; i < count; i++) {
-                String nodeName = nodes.item(i).getNodeName();
-                String nodeValue = nodes.item(i).getFirstChild().getNodeValue();
-                if ("MsgType".equals(nodeName) && "text".equals(nodeValue)) {
-                    isText = true;
-                }
-                if ("Content".equals(nodeName)) {
-                    textContent = nodeValue;
-                }
-                if ("FromUserName".equals(nodeName)) {
-                    FromUserName = nodeValue;
-                }
-                if ("ToUserName".equals(nodeName)) {
-                    ToUserName = nodeValue;
+    //WeiXinHandler为内部类不能使用非final类型的对象
+    final String TOKEN = "zha";
+    final HttpServletRequest final_request = request;
+    final HttpServletResponse final_response = response;
+%>
+<%
+    class WeiXinHandler {
+        public void valid() {
+            String echostr = final_request.getParameter("echostr");
+            if (null == echostr || echostr.isEmpty()) {
+                responseMsg();
+            } else {
+                if (this.checkSignature()) {
+                    this.print(echostr);
+                } else {
+                    this.print("error");
                 }
             }
-            System.out.println("weixin_message:textContent=" + textContent);
+        }
 
-//reply text message
-            if (isText) {
-                StringBuffer replyInfo = new StringBuffer();
-                Date d = new Date();
-                long CreateTime = d.getTime() / 1000;
-                replyInfo.append("<xml>");
-                replyInfo.append("<ToUserName>");
-                replyInfo.append("<![CDATA[").append(FromUserName).append("]]>");
-                replyInfo.append("</ToUserName>");
-                replyInfo.append("<FromUserName>");
-                replyInfo.append("<![CDATA[").append(ToUserName).append("]]>");
-                replyInfo.append("</FromUserName>");
-                replyInfo.append("<CreateTime>");
-                replyInfo.append(CreateTime);
-                replyInfo.append("</CreateTime>");
-                replyInfo.append("<MsgType>");
-                replyInfo.append("<![CDATA[text]]>");
-                replyInfo.append("</MsgType>");
-                replyInfo.append("<Content>");
-                replyInfo.append("<![CDATA[hello,你好！]]>");
-                replyInfo.append("</Content>");
-                replyInfo.append("</xml>");
-                out.clear();
-                out.print(replyInfo.toString());
+        //自动回复内容
+        public void responseMsg() {
+            String postStr = null;
+            try {
+                postStr = this.readStreamParameter(final_request.getInputStream());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //System.out.println(postStr);
+            if (null != postStr && !postStr.isEmpty()) {
+                Document document = null;
+                try {
+                    document = DocumentHelper.parseText(postStr);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (null == document) {
+                    this.print("");
+                    return;
+                }
+                Element root = document.getRootElement();
+                String fromUsername = root.elementText("FromUserName");
+                String toUsername = root.elementText("ToUserName");
+                String keyword = root.elementTextTrim("Content");
+                String time = new Date().getTime() + "";
+                String textTpl = "<xml>" +
+                        "<ToUserName><![CDATA[%1$s]]></ToUserName>" +
+                        "<FromUserName><![CDATA[%2$s]]></FromUserName>" +
+                        "<CreateTime>%3$s</CreateTime>" +
+                        "<MsgType><![CDATA[%4$s]]></MsgType>" +
+                        "<Content><![CDATA[%5$s]]></Content>" +
+                        "<FuncFlag>0</FuncFlag>" +
+                        "</xml>";
+
+                if (null != keyword && !keyword.equals("")) {
+                    String msgType = "text";
+                    String contentStr = "Welcome to wechat world!";
+                    String resultStr = textTpl.format(textTpl, fromUsername, toUsername, time, msgType, contentStr);
+                    this.print(resultStr);
+                } else {
+                    this.print("Input something...");
+                }
+
+            } else {
+                this.print("");
             }
         }
-        return;
-    } else {
-        System.out.println("weixin_test:err");
+
+        //微信接口验证
+        public boolean checkSignature() {
+            String signature = final_request.getParameter("signature");
+            String timestamp = final_request.getParameter("timestamp");
+            String nonce = final_request.getParameter("nonce");
+            String token = TOKEN;
+            String[] tmpArr = {token, timestamp, nonce};
+            Arrays.sort(tmpArr);
+            String tmpStr = this.ArrayToString(tmpArr);
+            tmpStr = this.SHA1Encode(tmpStr);
+            if (tmpStr.equalsIgnoreCase(signature)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        //向请求端发送返回数据
+        public void print(String content) {
+            try {
+                final_response.getWriter().print(content);
+                final_response.getWriter().flush();
+                final_response.getWriter().close();
+            } catch (Exception e) {
+
+            }
+        }
+
+        //数组转字符串
+        public String ArrayToString(String[] arr) {
+            StringBuffer bf = new StringBuffer();
+            for (int i = 0; i < arr.length; i++) {
+                bf.append(arr[i]);
+            }
+            return bf.toString();
+        }
+
+        //sha1加密
+        public String SHA1Encode(String sourceString) {
+            String resultString = null;
+            try {
+                resultString = new String(sourceString);
+                MessageDigest md = MessageDigest.getInstance("SHA-1");
+                resultString = byte2hexString(md.digest(resultString.getBytes()));
+            } catch (Exception ex) {
+            }
+            return resultString;
+        }
+
+        public final String byte2hexString(byte[] bytes) {
+            StringBuffer buf = new StringBuffer(bytes.length * 2);
+            for (int i = 0; i < bytes.length; i++) {
+                if (((int) bytes[i] & 0xff) < 0x10) {
+                    buf.append("0");
+                }
+                buf.append(Long.toString((int) bytes[i] & 0xff, 16));
+            }
+            return buf.toString().toUpperCase();
+        }
+
+        //从输入流读取post参数
+        public String readStreamParameter(ServletInputStream in) {
+            StringBuilder buffer = new StringBuilder();
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (null != reader) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return buffer.toString();
+        }
     }
 %>
-<html>
-<head>
-</head>
-<body>
-<h2>Hello World!</h2>
-</body>
-</html>
-
+<%
+    WeiXinHandler handler = new WeiXinHandler();
+    handler.valid();
+%>

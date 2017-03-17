@@ -10,17 +10,29 @@
         <result property="produceImage" column="p_image"/>
         <result property="produceContext" column="p_context"/>
         <result property="produceBrand" column="p_brand"/>
+        <result property="produceSerialNumber" column="p_serial_number"/>
+    </resultMap>
+
+    <resultMap id="productItem" type="ProductItem">
+        <result property="productName" column="p_name"></result>
+        <result property="productCatagory" column="c_name"></result>
+        <result property="productPrice" column="p_price"></result>
+        <result property="productImage" column="p_image"></result>
+        <result property="produceContext" column="p_context"></result>
+        <result property="productBrand" column="p_brand"></result>
     </resultMap>
 
     <insert id="add" parameterType="Product" >
-        INSERT INTO product(c_id, p_name, p_price, p_image, p_context, p_brand)
-        VALUES(#{catagoryId}, #{produceName}, #{producePrice}, #{produceImage}, #{produceContext}, #{produceBrand});
+        INSERT INTO product(c_id, p_name, p_price, p_image, p_context, p_brand, p_serial_number)
+        VALUES(#{catagoryId}, #{produceName}, #{producePrice}, #{produceImage}, #{produceContext},
+        #{produceBrand}, #{produceSerialNumber});
     </insert>
 
     <insert id="addList" parameterType="Product">
-        INSERT INTO product(c_id, p_name, p_price, p_image, p_context, p_brand) VALUES
+        INSERT INTO product(c_id, p_name, p_price, p_image, p_context, p_brand, p_serial_number) VALUES
         <foreach collection="list" index="index" separator="," item="product">
-            (#{product.catagoryId}, #{product.produceName}, #{product.producePrice}, #{product.produceImage}, #{product.produceContext}, #{product.produceBrand})
+            (#{product.catagoryId}, #{product.produceName}, #{product.producePrice}, #{product.produceImage}, #{product.produceContext},
+            #{product.produceBrand}, #{product.produceSerialNumber})
         </foreach>
     </insert>
 
@@ -32,8 +44,12 @@
     <select id="findbyCatagoryId" resultMap="product" parameterType="int">
         SELECT * FROM product WHERE c_id=#{cid};
     </select>
-    
+
     <select id="findbyId" resultMap="product" parameterType="int">
         SELECT * FROM product WHERE p_id=#{p_id};
+    </select>
+
+    <select id="findBySerId" parameterType="String" resultMap="productItem">
+        SELECT p_name,c_name,p_price,p_image,p_context,p_brand FROM PRODUCT ,CATAGORY where product.c_id = catagory.c_id and p_serial_number =#{productId};
     </select>
 </mapper>

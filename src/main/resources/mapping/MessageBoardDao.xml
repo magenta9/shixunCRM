@@ -71,5 +71,9 @@
          ORDER BY m_date DESC LIMIT #{offSet}, #{pageSize};
     </select>
 
+    <select id="getMessageBoardById" parameterType="Integer" resultMap="mb">
+        SELECT * FROM message_board WHERE m_id = #{messageId}
+    </select>
+
 
 </mapper>

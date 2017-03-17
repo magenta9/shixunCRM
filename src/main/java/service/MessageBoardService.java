@@ -27,5 +27,6 @@ public interface MessageBoardService {
     //更新消息的处理状态
     boolean updateMessage(MessageBoard messageBoard);
 
-
+    //根据ID查找MessageBoard
+    MessageBoard getMessageBoardById(int messageId);
 }

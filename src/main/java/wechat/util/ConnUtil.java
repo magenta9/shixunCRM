@@ -27,6 +27,9 @@ public class ConnUtil {
     public static String Oauth2Address = "https://open.weixin.qq.com/connect/oauth2/authorize?" +
             "appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
 
+//    public static String baseUrl = "http://3a55eaca.ittun.com";
+    public static String baseUrl = "http://118.89.143.15";
+
     public static String getToken() {
         String str = HttpGetDataUtil.sendGet(
                 "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" +

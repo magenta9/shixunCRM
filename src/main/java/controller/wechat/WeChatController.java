@@ -33,6 +33,12 @@ public class WeChatController {
         return "/wechat/verify";
     }
 
+    /**
+     * 与微信服务器进行交互
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     public void verifyPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
@@ -47,24 +53,57 @@ public class WeChatController {
         }
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    //登录授权转到toLogin
+    @RequestMapping(value = "/loginto", method = RequestMethod.GET)
     public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         addOpenId(request, response);
-        return "forward:/admin/toLogin";
+        System.out.println(request.getAttribute("openid"));
+        return "forward:/wechat/toLogin";
     }
 
+    //注册信息
     @RequestMapping(value = "/bind", method = RequestMethod.GET)
     public String bind(HttpServletRequest request, HttpServletResponse response) throws IOException {
         addOpenId(request, response);
-        return "forward:/test/hello";
+        return "forward:/wechat/toRegist";
     }
 
+    //修改个人信息
     @RequestMapping(value = "/alter", method = RequestMethod.GET)
     public String alter(HttpServletRequest request, HttpServletResponse response) throws IOException {
         addOpenId(request, response);
-        return "forward:/test/hello";
+        return "forward:/wechat/toUpdate";
     }
 
+    //修改个人密码
+    @RequestMapping(value = "/alterpwd", method = RequestMethod.GET)
+    public String alterpwd(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/wechat/toPassword";
+    }
+
+    //上传照片
+    @RequestMapping(value = "/uploadPic", method = RequestMethod.GET)
+    public String uppic(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/wechat/toPicture";
+    }
+
+    //获取个人信息
+    @RequestMapping(value = "/getinfo", method = RequestMethod.GET)
+    public String getInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/wechat/toInformation";
+    }
+
+    //热门商品
+    @RequestMapping(value = "/order1", method = RequestMethod.GET)
+    public String toorder(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/wechat/toOrder";
+    }
+
+    //添加Openid信息
     public void addOpenId(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         request.setCharacterEncoding("gb2312");
         response.setCharacterEncoding("gb2312");
@@ -74,6 +113,7 @@ public class WeChatController {
             String accesstoken = weixinOauth2Token.getAccessToken();
             String openid = weixinOauth2Token.getOpenId();
             request.setAttribute("openid", Oauth2Util.getSNSUserInfo(accesstoken, openid).getOpenId());
+            System.out.println("adopenid" + request.getAttribute("openid"));
         }
     }
 }

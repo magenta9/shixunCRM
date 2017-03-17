@@ -24,10 +24,13 @@ public interface UserDao {
     int findbyNameAndPwd(String name, String password);
 
     //根据账户密码获取用户信息
-    User getUserByNameAndPwd(String name,String password);
+    User getUserByNameAndPwd(String name, String password);
 
     //查找openid是否被使用
     User findUserByOpenId(String openId);
+
+    //根据personid查询用户
+    User findUserByPersonId(String personId);
 
     //查找emial是否被使用
     int getCountbyEmail(@Param("email") String email);
@@ -63,5 +66,8 @@ public interface UserDao {
     int delUsers(List<Integer> uIds);
 
     //查找该名字是否已使用
-    User searchByUname(@Param("uname") String uname);
+    int getCountByUname(@Param("uname") String uname);
+
+    //查找当月新增会员数
+    int listaddUser(@Param("date") String yearandmonth);
 }

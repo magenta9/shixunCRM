@@ -22,6 +22,15 @@ public class Product implements Serializable {
     private String produceImage;
     private String produceContext;
     private String produceBrand;
+    private String produceSerialNumber;
+
+    public String getProduceSerialNumber() {
+        return produceSerialNumber;
+    }
+
+    public void setProduceSerialNumber(String produceSerialNumber) {
+        this.produceSerialNumber = produceSerialNumber;
+    }
 
     public int getProductId() {
         return productId;

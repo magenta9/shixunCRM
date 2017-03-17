@@ -1,38 +1,29 @@
 package controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import service.AdminService;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.Resource;
 
 /**
- * Created by alienware on 2017/3/1.
+ * Created by magenta9 on 2017/3/1.
  */
 @Controller
-@RequestMapping(value="/test")
+@RequestMapping("/test")
 public class TestController {
 
-    /**
-     *  跳转用户登录
-     */
-    @RequestMapping("/toLogin")
-    public String toLogin(){
-//        System.out.print("111");
-//        System.out.println(request.getParameter("openid"));
-        return "/admin/login";
-    }
+    @Resource
+    private AdminService adminService;
 
-    @RequestMapping("/login")
-    public String login(){
-        //判断逻辑
-
-        return "/admin/main";
-    }
-
-    @RequestMapping("/hello")
-    public String hello(){
-        //判断逻辑
-
-        return "/wechat/hello";
+    @RequestMapping("/echarts")
+    public String testEcharts(ModelMap map) {
+        map.addAttribute("addUserCount", adminService.getPast6MonthAddUserCount()); //过去6个月新增会员信息
+        map.addAttribute("MonthSale", adminService.getMonthSaleAndForecast());      //过去6个月销售额以及下个月预测
+//        map.addAttribute("MonthSale", adminService.getPast6MonthSale());          //过去6个月销售额
+        map.addAttribute("catagory", adminService.getCatagoryCount());              //销售分类统计数据
+        return "/test/echarts";
     }
 }

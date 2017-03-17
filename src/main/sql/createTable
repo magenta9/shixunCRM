@@ -12,6 +12,7 @@ CREATE TABLE `user` (
   `is_deleted` tinyint(1) DEFAULT NULL,		# 是否删除
   `u_image_url` varchar(100) DEFAULT NULL,   # 图片地址
   `open_id` varchar(30)  UNIQUE DEFAULT NULL,       # 微信openid
+  `personid` varchar(50) DEFAULT NULL,      # 微软Azure服务图片id
   PRIMARY KEY (`u_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -25,14 +26,15 @@ CREATE TABLE `admin` (
 
 # 产品表
 create table product (
-	p_id int NOT NULL AUTO_INCREMENT primary key,	# 产品id
-	c_id int NOT NULL,								# 产品种类id
-	p_name varchar(50) NOT NULL,					# 产品名
-	p_price double(10, 2) NOT NULL,					# 产品价格
-	p_image varchar(100) NOT NULL,					# 产品图片地址
-	p_context varchar(255) NOT NULL,				# 产品简介
-	p_brand varchar(100) NOT NULL 					# 品牌
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ p_id int NOT NULL AUTO_INCREMENT primary key,	# 产品id
+ c_id int NOT NULL,								# 产品种类id
+ p_name varchar(50) NOT NULL,					# 产品名
+ p_price double(10, 2) NOT NULL,				# 产品价格
+ p_image varchar(100) NOT NULL,					# 产品图片地址
+ p_context varchar(255) NOT NULL,				# 产品简介
+ p_brand varchar(100) NOT NULL, 				# 品牌
+ `p_serial_number` varchar(20) DEFAULT NULL    # 产品编号
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # 产品种类表
 create table catagory (
@@ -74,4 +76,8 @@ create table image_url (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
+create table pro_rec(
+	user_id varchar(100) , #用户名
+	pro_id varchar(500), 
+	create_time datetime default now()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

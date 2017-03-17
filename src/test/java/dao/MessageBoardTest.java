@@ -10,6 +10,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
+
 /**
  * Created by magenta9 on 2017/2/28.
  */
@@ -23,6 +25,7 @@ public class MessageBoardTest {
         messageBoardDao = (MessageBoardDao) ctx.getBean("messageBoardDao");
     }
 
+    //测试添加用户
     @Test
     public void testAdd() {
         MessageBoard messageBoard = new MessageBoard();
@@ -32,6 +35,7 @@ public class MessageBoardTest {
         System.out.println(messageBoardDao.add(messageBoard));
     }
 
+    //测试获取数量
     @Test
     public void testGetCount() {
         System.out.println(messageBoardDao.getTotalCount());
@@ -39,6 +43,7 @@ public class MessageBoardTest {
         System.out.println(messageBoardDao.getTotalCountbyState(0));
     }
 
+    //测试查找信息
     @Test
     public void testfind() {
         List<MessageBoard> list = messageBoardDao.findAll(0, 20);

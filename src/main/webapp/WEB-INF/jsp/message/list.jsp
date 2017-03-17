@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -15,6 +16,7 @@
 	  <link href="${ pageContext.request.contextPath }/static/css/flat-ui.min.css" rel="stylesheet">
 
     <!-- 自定义 -->
+  	<link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/static/css/my/body.css">
     <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/static/css/my/advice.css">
 
 
@@ -33,17 +35,18 @@
   <jsp:include page="${ pageContext.request.contextPath }/WEB-INF/jsp/controler/nav.jsp"></jsp:include>
   <!--导航栏结束 -->
 
-  <!-- 左侧开始-->
-  <jsp:include page="${ pageContext.request.contextPath }/WEB-INF/jsp/controler/left.jsp"></jsp:include>
-  <!--左侧结束 -->
+  <div class="row">
+	  <!-- 左侧开始-->
+	  <jsp:include page="${ pageContext.request.contextPath }/WEB-INF/jsp/controler/left.jsp"></jsp:include>
+	  <!--左侧结束 -->
 
-   
-	<div class="container div_main">
+	<div class="col-md-9 div_main">
 		<!-- 搜索框开始-->
 		<div class="row div_search">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				 <form action="list" role="search">
+					 <input type="hidden" name="pageSize" value="${pagination.pageSize}"/>
 				    <div class="input-group">
 				      <input type="text" class="form-control" placeholder="搜索留言" name="condition">
 				      <span class="input-group-btn">
@@ -52,9 +55,9 @@
 					</div><!-- /input-group -->
 			    </form>
 			   <span class="span_tag">筛选条件：</span>
-			    <a href="list?category=0"><span class="label label-danger">未处理</span></a>
-		    	<a href="list?category=1"><span class="label label-warning">处理中</span></a>
-		    	<a href="list?category=2"><span class="label label-success">已处理</span></a>
+			    <a href="list?category=0&pageSize=${pagination.pageSize}"><span class="label label-danger">未处理</span></a>
+		    	<a href="list?category=1&pageSize=${pagination.pageSize}"><span class="label label-warning">处理中</span></a>
+		    	<a href="list?category=2&pageSize=${pagination.pageSize}"><span class="label label-success">已处理</span></a>
 			  
 		    </div>
 		    <div class="col-md-3"></div>
@@ -62,9 +65,20 @@
 		 <!--搜索框结束 -->
 		 <br/>
 
+<c:if test="${empty pagination.items  && fn:length(pagination.items) <= 0}">
+	<div class="alert alert-danger" role="alert">对不起，暂时还没有信息！</div>
+</c:if>
+
+<c:if test="${not empty pagination.items  && fn:length(pagination.items) > 0}">
 		<!-- 用户意见列表开始 -->
 		<div class="row" id="div_advice">
 			<c:forEach items="${pagination.items}" var="MessageBoard">
+				<form action="update" method="post">
+					<input type="hidden" name="messageId" value="${MessageBoard.messageId}"/>
+					<input type="hidden" name="currentPage" value="${pagination.currentPage}"/>
+					<input type="hidden" name="pageSize" value="${pagination.pageSize}"/>
+					<input type="hidden" name="category" value="${category}"/>
+					<input type="hidden" name="condition" value="${condition}"/>
 				<div class="panel
 				<c:if test="${MessageBoard.state == 0}">panel-danger</c:if>
 				<c:if test="${MessageBoard.state == 1}">panel-warning</c:if>
@@ -99,9 +113,15 @@
 									</div>
 								</td>
 								<td class="col-md-1">
-									<c:if test="${MessageBoard.state == 0}"><button class="btn btn-primary">进行处理</button></c:if>
-									<c:if test="${MessageBoard.state == 1}"><button class="btn btn-primary">处理完成</button></c:if>
-									<c:if test="${MessageBoard.state == 2}"><button class="btn " disabled="true">已处理</button></c:if>
+									<c:if test="${MessageBoard.state == 0}">
+										<input type="hidden" name="state" value="1"/>
+										<input type="submit" class="btn btn-primary" value="进行处理"/>
+									</c:if>
+									<c:if test="${MessageBoard.state == 1}">
+										<input type="hidden" name="state" value="2"/>
+										<input type="submit" class="btn btn-primary" value="处理完成"/>
+									</c:if>
+									<c:if test="${MessageBoard.state == 2}"><a class="btn " disabled="true">已处理</a></c:if>
 
 								</td>
 							</tr>
@@ -109,6 +129,7 @@
 						</table>
 					</div>
 				</div>
+				</form>
 			</c:forEach>
 
 		</div>
@@ -118,9 +139,12 @@
 		<!-- 分页列表-->
 		<jsp:include page="${ pageContext.request.contextPath }/WEB-INF/jsp/controler/page.jsp"></jsp:include>
 		<!--分页列表结束-->
-
+</c:if>
 		
 	</div>
+
+    <div class="col-md-1 div_footer"></div>
+  </div>
 
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
   <script src="${ pageContext.request.contextPath }/static/js/vendor/jquery.min.js"></script>

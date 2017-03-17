@@ -15,6 +15,7 @@
         <result property="isDeleted" column="is_deleted"/>
         <result property="userImageUrl" column="u_image_url"/>
         <result property="openId" column="open_id"></result>
+        <result property="personId" column="personid"/>
     </resultMap>
 
     <insert id="add" parameterType="User" >
@@ -49,9 +50,14 @@
        SELECT * FROM `USER` WHERE OPEN_ID=#{arg0} AND is_deleted=0;
     </select>
 
+    <select id="findUserByPersonId" resultMap="user1">
+        SELECT * FROM USER WHERE personid=#{arg0} AND is_deleted=0;
+    </select>
+
     <update id="update" parameterType="User">
         UPDATE user
         <set>
+            u_name = #{userName},
             u_password=#{userPassword},
             u_sex=#{userSex},
             u_email=#{userEmail},
@@ -59,7 +65,9 @@
             u_score=#{userScore},
             u_level=#{userLevel},
             is_deleted=#{isDeleted},
-            open_id=#{openId}
+            u_image_url=#{userImageUrl},
+            open_id=#{openId},
+            personid=#{personId}
         </set>
         WHERE u_id=#{userId};
     </update>
@@ -80,39 +88,43 @@
     </update>
     
     <select id="getTotalCount" resultType="int">
-      SELECT COUNT(*) FROM USER ;
+      SELECT COUNT(*) FROM USER WHERE is_deleted=0;
     </select>
 
     <select id="list" resultMap="user1">
-        SELECT * FROM USER  ORDER BY U_CREATEDATE DESC LIMIT #{offSet} , #{pageSize};
+        SELECT * FROM USER WHERE is_deleted=0 ORDER BY U_CREATEDATE DESC LIMIT #{offSet} , #{pageSize};
     </select>
 
-    <select id="getCount" resultType="int" >
-        SELECT COUNT(*) FROM USER WHERE U_NAME LIKE "%${uname}%";
+  <select id="getCount" resultType="int" >
+        SELECT COUNT(*) FROM USER WHERE U_NAME LIKE "%${uname}%" AND is_deleted=0;
     </select>
 
     <select id="serachByUname" resultMap="user1">
-        SELECT * FROM USER  WHERE U_NAME LIKE "%${uname}%" ORDER BY u_createdate DESC LIMIT #{offSet} , #{pageSize};
+        SELECT * FROM USER  WHERE U_NAME LIKE "%${uname}%" AND is_deleted=0 ORDER BY u_createdate DESC LIMIT #{offSet} , #{pageSize};
     </select>
 
     <select id="getCountByLevel" resultType="int" parameterType="int">
-        SELECT COUNT(*) FROM USER WHERE u_level=#{level};
+        SELECT COUNT(*) FROM USER WHERE u_level=#{level} AND is_deleted=0;
     </select>
 
     <select id="searchUsersByLevel" resultMap="user1">
-        SELECT * FROM USER  WHERE u_level = #{level} ORDER BY u_createdate DESC LIMIT #{offSet} , #{pageSize};
+        SELECT * FROM USER  WHERE u_level = #{level} AND is_deleted=0 ORDER BY u_createdate DESC LIMIT #{offSet} , #{pageSize};
     </select>
 
-    <select id="searchByUname" resultMap="user1">
-        SELECT * FROM USER WHERE u_name=#{uname};
+    <select id="getCountByUname" resultType="int">
+        SELECT COUNT(*) FROM USER WHERE u_name=#{uname} AND is_deleted=0;
     </select>
 
     <select id="getCountbyEmail" resultType="int">
-        SELECT COUNT(*) FROM USER WHERE u_email=#{email};
+        SELECT COUNT(*) FROM USER WHERE u_email=#{email} AND is_deleted=0;
     </select>
 
     <select id="getCountbyPhone" resultType="int">
-        SELECT COUNT(*) FROM USER WHERE u_phone=#{phone};
+        SELECT COUNT(*) FROM USER WHERE u_phone=#{phone} AND is_deleted=0;
+    </select>
+
+    <select id="listaddUser" resultType="int">
+        SELECT COUNT(*) FROM USER WHERE date_format(u_createdate, '%Y-%m')=#{date} AND is_deleted=0;
     </select>
 
 </mapper>

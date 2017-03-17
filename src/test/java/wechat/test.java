@@ -8,6 +8,10 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import service.WechatService;
 import util.GsonUtil;
 import wechat.menu.Button;
 import wechat.menu.ClickButton;
@@ -17,13 +21,19 @@ import wechat.service.SendMessage;
 import wechat.util.ConnUtil;
 import wechat.util.Oauth2Util;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by magenta9 on 2017/3/5.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations =  { "/spring/spring-dao.xml" ,"/spring/spring-service.xml"})
 public class test {
+
+    @Resource(name = "wechatService")
+    private WechatService wechatService;
 
     @Test
     public void testDom4j() throws DocumentException {
@@ -128,4 +138,12 @@ public class test {
         SendMessage.sendCustomMessage(ConnUtil.getToken(), jsonTextMsg);
     }
 
+    @Test
+    public void testsend() {
+        wechatService.SendMessage(223, "hello world.");
+    }
+
+    @Test
+    public void test1aaa() {
+    }
 }

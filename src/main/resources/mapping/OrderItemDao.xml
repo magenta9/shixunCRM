@@ -59,4 +59,12 @@
     <select id="getTotalCount" resultType="int">
         SELECT COUNT(*) FROM orderitem;
     </select>
+
+    <select id="getTopNProduce" resultType="int">
+        select p_id from orderitem group by p_id order by SUM(oi_number) desc limit 0, #{num};
+    </select>
+
+    <select id="getCatagoryCount" resultType="CatagoryCount">
+        select c.c_name as name, SUM(o.oi_number) as number from orderitem o left join product p on o.p_id=p.p_id join catagory c on p.c_id=c.c_id group by c_name;
+    </select>
 </mapper>

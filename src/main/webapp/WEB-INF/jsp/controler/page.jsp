@@ -11,7 +11,6 @@
 <div class="row">
     <div class="col-md-12" align="center">
         <ul class="pagination">
-
             <!-- 后退按钮开始 -->
             <c:if test="${pagination.currentPage > 1}">
                 <li class="previous"><a href="${queryParames}&currentPage=${pagination.currentPage - 1}" class="fui-arrow-left"></a></li>
@@ -19,7 +18,7 @@
             <!-- 后退按钮结束 -->
 
             <!--页码列表开始 -->
-            <c:if test="${pagination.currentPage < 10 }">
+            <c:if test="${pagination.totalPages < 10 }">
                 <c:forEach begin="1" end="${pagination.totalPages}" step="1" var="i">
                     <c:if test="${pagination.currentPage == i}">
                         <li class="active"><a href="${queryParames}&currentPage=${i}">${i}</a></li>
@@ -30,7 +29,7 @@
                 </c:forEach>
             </c:if>
 
-            <c:if test="${pagination.currentPage - 4 <= 0 && pagination.currentPage >= 10}">
+            <c:if test="${pagination.currentPage - 4 <= 0 && pagination.totalPages >= 10}">
                 <c:forEach begin="1" end="10" step="1" var="i">
                     <c:if test="${pagination.currentPage == i}">
                         <li class="active"><a href="${queryParames}&currentPage=${i}">${i}</a></li>
@@ -41,7 +40,7 @@
                 </c:forEach>
             </c:if>
 
-            <c:if test="${pagination.currentPage - 4 > 0 && pagination.currentPage + 5 <= pagination.totalPages && pagination.currentPage >= 10 }">
+            <c:if test="${pagination.currentPage - 4 > 0 && pagination.currentPage + 5 <= pagination.totalPages && pagination.totalPages >= 10 }">
                 <c:forEach begin="${pagination.currentPage - 4}" end="${pagination.currentPage + 5}" step="1" var="i">
                     <c:if test="${pagination.currentPage == i}">
                         <li class="active"><a href="${queryParames}&currentPage=${i}">${i}</a></li>
@@ -52,8 +51,8 @@
                 </c:forEach>
             </c:if>
 
-            <c:if test="${pagination.currentPage + 5 > pagination.totalPages && pagination.currentPage >= 10}">
-                6						<c:forEach begin="${pagination.totalPages - 9}" end="${pagination.totalPages}" step="1" var="i">
+            <c:if test="${pagination.currentPage + 5 > pagination.totalPages && pagination.totalPages >= 10}">
+            <c:forEach begin="${pagination.totalPages - 9}" end="${pagination.totalPages}" step="1" var="i">
                 <c:if test="${pagination.currentPage == i}">
                     <li class="active"><a href="${queryParames}&currentPage=${i}">${i}</a></li>
                 </c:if>
@@ -70,12 +69,12 @@
                     <i class="fui-triangle-up"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <c:forEach begin="1" end="${pagination.totalPages}" step="1" var="i">
-                        <c:if test="${pagination.currentPage == i}">
-                            <li class="active"><a href="${queryParames}&currentPage=${i}">${i}</a></li>
+                    <c:forEach begin="5" end="15" step="2" var="i">
+                        <c:if test="${pagination.pageSize == i}">
+                            <li class="active"><a href="${queryParames}&changePageSize=${i}">${i}</a></li>
                         </c:if>
-                        <c:if test="${pagination.currentPage != i}">
-                            <li><a href="${queryParames}&currentPage=${i}">${i}</a></li>
+                        <c:if test="${pagination.pageSize != i}">
+                            <li><a href="${queryParames}&changePageSize=${i}">${i}</a></li>
                         </c:if>
                     </c:forEach>
                 </ul>

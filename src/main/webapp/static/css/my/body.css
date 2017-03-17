@@ -1,0 +1,15 @@
+body{
+	padding-top: 70px;
+}
+
+@media screen and (max-width:1680px ){
+	.div_left{display: none}
+	.div_footer{display: none}
+	.div_main{
+		width: 84%;
+		margin-left: 8%;
+		margin-right: 8%;
+	}
+}
+
+

@@ -31,6 +31,7 @@ public class UserTest {
     @Test
     public void testFindbyId() {
         User user = userDao.findById(1);
+        if(user == null) return;
         System.out.println(user.getUserName() + user.getUserEmail());
     }
 
@@ -47,8 +48,8 @@ public class UserTest {
         user.setUserPassword("123456");
         user.setUserSex("女");
         user.setUserPhone("115");
-        user.setOpenId("abcdefghijklmn");
-        System.out.println(userDao.add(user));
+        user.setOpenId("abcdefghijklmnvd");
+//        System.out.println(userDao.add(user));
     }
 
     /**
@@ -108,6 +109,7 @@ public class UserTest {
     @Test
     public void testUpdateUser() {
         User user = userDao.findById(1);
+        if(user == null) return;
         user.setUserPassword("321654");
         System.out.println(userDao.update(user));
     }
@@ -124,6 +126,7 @@ public class UserTest {
     @Test
     public void testAddImage() {
         User user = userDao.findById(2);
+        if(user == null) return;
         user.setUserImageUrl("../images/absdsdsd.jpg");
         System.out.println(userDao.addImage(user));
     }
@@ -203,6 +206,11 @@ public class UserTest {
                 ) {
             System.out.println("user:"+user);
         }
+    }
+
+    @Test
+    public void testgetCountbyDate() {
+        System.out.println(userDao.listaddUser("2017-03"));
     }
 
 }

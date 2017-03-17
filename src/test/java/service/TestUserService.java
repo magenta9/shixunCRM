@@ -70,4 +70,6 @@ public class TestUserService {
         if(userService.updateUser(user))
             System.out.println("更新成功");
     }
+
+
 }

@@ -69,4 +69,10 @@ public class MessageBoardServiceImpl implements MessageBoardService{
     public boolean updateMessage(MessageBoard messageBoard) {
         return messageBoardDao.update(messageBoard)!=-1;
     }
+
+    @Override
+    public MessageBoard getMessageBoardById(int messageId) {
+        return messageBoardDao.getMessageBoardById(messageId);
+    }
+
 }

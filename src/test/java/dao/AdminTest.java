@@ -40,6 +40,7 @@ public class AdminTest {
     @Test
     public void testFindbyId() {
         Admin admin = adminDao.findById(1);
+        if(admin == null) return;
         System.out.println(admin.getAdminName());
     }
 
@@ -49,6 +50,7 @@ public class AdminTest {
     @Test
     public void testUpdate() {
         Admin admin = adminDao.findById(1);
+        if(admin == null) return;
         admin.setAdminPassword("helloworld");
         System.out.println(adminDao.update(admin));
     }

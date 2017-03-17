@@ -2,15 +2,20 @@ package serviceimpl;
 
 import dao.AdminDao;
 import dao.UserDao;
+import entity.PersonEntity;
 import entity.User;
 import entity.UserPagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.UserService;
+import util.FaceIdentifyUtil;
 import util.Pagination;
 
 import javax.annotation.Resource;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -120,13 +125,13 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
-    public boolean UserNameNotUsed(String name) {
-        return userDao.searchByUname(name) == null;
+    public boolean UserNameUsed(String name) {
+        return userDao.getCountByUname(name)>0;
     }
 
     @Override
     public boolean judgeUser(User user) {
-        if(!UserNameNotUsed(user.getUserName())) {
+        if(UserNameUsed(user.getUserName())) {
             return false;
         }
         if(userDao.getCountbyEmail(user.getUserEmail()) > 0) {
@@ -138,5 +143,53 @@ public class UserServicesImpl implements UserService{
         return true;
     }
 
+    @Override
+    public boolean createUserPersonId(User user) {
+        PersonEntity personEntity = new PersonEntity();
+        String peresistedId=null;
+        try {
+            user.setPersonId(FaceIdentifyUtil.createaperson("zp",user.getUserName(), user.getUserSex()));
+            peresistedId=FaceIdentifyUtil.addface(user.getUserImageUrl(),user.getPersonId(), "zp");
+            if(peresistedId!=null){
+                if((userDao.update(user))!=-1)
+                {
+                    return true;
+                }
+            }
+            // System.out.println(peresistedId);
+            // System.out.println(peresistedId);
 
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public User identifyUser(String url) {
+        User user = null;
+        try {
+            FaceIdentifyUtil.traingroup("zp");
+            PersonEntity personEntity = new PersonEntity();
+            personEntity = FaceIdentifyUtil.factdect(url);
+            personEntity=FaceIdentifyUtil.faceident("zp",personEntity.getFaceid(),1,0.5);
+
+            if(personEntity.getPersonid()!=null)
+            {
+
+                return userDao.findUserByPersonId(personEntity.getPersonid());
+            }
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

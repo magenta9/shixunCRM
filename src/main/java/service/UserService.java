@@ -41,11 +41,17 @@ public interface UserService {
     User getUserByOpenId(String openId);
 
     //根据用户名和密码返回会员对象(唯一)
-    User getUserByUnameAndPwd(String name,String password);
+    User getUserByUnameAndPwd(String name, String password);
 
     //判断用户名是否使用
-    boolean UserNameNotUsed(String name);
+    boolean UserNameUsed(String name);
 
     //判断用户名字，email和手机号是否使用
     boolean judgeUser(User user);
+
+    //上传照片创建用户personId
+    boolean createUserPersonId(User user);
+
+    //进行人脸识别，获取userId
+    User identifyUser(String url);
 }

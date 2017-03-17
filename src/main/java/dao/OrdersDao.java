@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Orders;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface OrdersDao {
     List<Orders> findAll();
 
     Orders findbyOrderId(int id);
+
+    //距今num个月的销售额
+    double listSale(@Param("month") int num);
 }

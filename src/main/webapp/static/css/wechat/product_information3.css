@@ -1,0 +1,71 @@
+.u_body {
+	margin: 0px auto;
+	max-width: 720px;
+	min-height: 100%;
+	background-color: #eeeeee;
+	position: relative;
+}
+
+.u_header{
+	position: relative;
+	width: 100%;
+	height: 40px;
+	background-color: #fa0000;
+	text-align: center;
+	line-height: 40px;
+	color: #fff;
+	font-size: 18px;
+}
+
+.u_box input{
+	position: relative;
+	width: 100%;
+	height: 40px;
+}
+
+.u_mall_lnav ul{
+	display: -webkit-box;
+	box-orient:horizontal;
+}
+
+.u_mall_lnav ul li{
+	-webkit-box-flex: 1;
+}
+
+#goods_ul{
+	padding: 7px;
+}
+
+.u_goods_img li{
+	display: inline-block;
+	padding: 3px;
+	width: 49.6%;
+	overflow: hidden;
+}
+
+.u_goods_img li>div{
+	padding: 5px 0;
+	background: #fff;
+	border: solid 1px #e0e0e0;
+}
+
+.u_goods_img li>div img{
+	width: 100%;
+}
+
+li{
+	list-style: none;
+}
+
+.u_goods_img li>div div{
+	margin: 0 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	line-height: 18px;
+	font-size: 12px;
+}
+
+.u_goods_img li>div div span{
+	color: #e10000;
+}

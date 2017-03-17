@@ -18,13 +18,16 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#fakelink">首页</a></li>
-                    <li><a href="#fakelink">会员管理</a></li>
-                    <li><a href="#fakelink">商品管理</a></li>
+                    <li <c:if test="${tab == 0}">class="active"</c:if>><a href="/admin/main">首页</a></li>
+                    <li <c:if test="${tab == 1}">class="active"</c:if>><a href="${ pageContext.request.contextPath }/message/list">会员留言</a></li>
+                    <li <c:if test="${tab == 2}">class="active"</c:if>><a href="${ pageContext.request.contextPath }/user/list">会员管理</a></li>
+                    <li <c:if test="${tab == 3}">class="active"</c:if>><a href="${ pageContext.request.contextPath }/report/list">报表展示</a></li>
+                    <li <c:if test="${tab == 4}">class="active"</c:if>><a href="${ pageContext.request.contextPath }/user/toRecommand">商品推荐</a></li>
                 </ul>
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
-                        <li><a href="#fakelink">管理员管理</a></li>
+                        <li><p class="navbar-text">欢迎您，${admin.adminName}</p></li>
+                        <li><a href="/admin/logout">[<span>注销</span><span class="glyphicon glyphicon-log-out" style="margin-left: 10px"></span>]</a></li>
                     </ul>
                 </div>
             </div><!-- /.navbar-collapse -->

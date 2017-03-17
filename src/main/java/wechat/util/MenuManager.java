@@ -9,9 +9,14 @@ import wechat.util.MenuUtil;
 public class MenuManager {
     private static Menu getMenu() {
         ClickButton btn1 = new ClickButton();
-        btn1.setName("用户绑定");
+        btn1.setName("个人管理");
         btn1.setType("click");
         btn1.setKey("USER");
+
+        ClickButton btn2 = new ClickButton();
+        btn2.setName("会员功能");
+        btn2.setType("click");
+        btn2.setKey("FUNCTION");
 
 //        ClickButton btn11 = new ClickButton();
 //        btn11.setName("用户绑定");
@@ -28,22 +33,17 @@ public class MenuManager {
 //        btn13.setType("click");
 //        btn13.setKey("ALTER");
 //
-        ClickButton btn2 = new ClickButton();
-        btn2.setName("订单查询");
-        btn2.setType("click");
-        btn2.setKey("QUERY");
-//
 //        ComplexButton btn3 = new ComplexButton();
 //        btn3.setName("会员中心");
 //        btn3.setSub_button(new Button[]{btn11, btn12, btn13});
 
-//        ClickButton btn2 = new ClickButton();
-//        btn2.setName("推荐商品");
-//        btn2.setType("click");
-//        btn2.setKey("COMMEND");
+        ClickButton btn3 = new ClickButton();
+        btn3.setName("反馈指南");
+        btn3.setType("click");
+        btn3.setKey("FEEDBACK");
 
         Menu menu = new Menu();
-        menu.setButton(new Button[]{btn1, btn2});
+        menu.setButton(new Button[]{btn1, btn2, btn3});
 
         return menu;
     }

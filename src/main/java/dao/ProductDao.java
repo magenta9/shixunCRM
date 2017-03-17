@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Product;
+import entity.ProductItem;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ProductDao {
     List<Product> findbyCatagoryId(int cid);
 
     Product findbyId(int id);
+
+    ProductItem findBySerId(String productId);
 }

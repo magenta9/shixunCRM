@@ -29,4 +29,6 @@ public interface MessageBoardDao {
 
     List<MessageBoard> findMessagebyName(@Param("name") String name, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
+    MessageBoard getMessageBoardById(int messageId);
+
 }

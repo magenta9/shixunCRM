@@ -11,6 +11,7 @@ import service.MessageBoardService;
 import wechat.response.Article;
 import wechat.response.NewsMessage;
 import wechat.response.TextMessage;
+import wechat.response.VoiceMessage;
 import wechat.util.ConnUtil;
 import wechat.util.MessageUtil;
 import wechat.util.Oauth2Util;
@@ -80,6 +81,8 @@ public class CoreService {
 //                responseContent = "您发送的是图片消息！";
             } else if(msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
 //                responseContent = "您发送的是语音消息！";
+//                VoiceMessage voiceMessage = new VoiceMessage();
+                System.out.println(requestMap.get("MediaId"));
             } else if(msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
 //                responseContent = "您发送的是视频消息！";
             } else if(msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
@@ -100,13 +103,10 @@ public class CoreService {
                     responseXML = MessageUtil.messageToXml(textMessage);
                     out.print(responseXML);
                 } else if(eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
-                    //TODO
                 } else if(eventType.equals(MessageUtil.EVENT_TYPE_SCAN)) {
-                    //TODO
                 } else if(eventType.equals(MessageUtil.EVENT_TYPE_LOCATION)) {
-                    //TODO
                 } else if(eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
-                    //TODO 处理菜单单击
+                    // 处理菜单单击
                     String eventKey = requestMap.get("EventKey");
                     String str = ConnUtil.Oauth2Address;
                     str = str.replace("APPID", ConnUtil.appId).replace("SCOPE", "snsapi_userinfo");
@@ -114,22 +114,58 @@ public class CoreService {
                         String responeXML = "";
                         Article Article1 = new Article();
                         Article1.setPicUrl("https://ww2.sinaimg.cn/large/006tKfTcgy1fde33dinc2j30a005kaco.jpg");
-                        Article1.setUrl("http://www.weiwoduzun.me/wechat/toLogin?openid=" + fromUserName);
-//                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/login")));
-//                        Article1.setUrl("http://23f25bf7.ittun.com/admin/toLogin?openid=" + fromUserName);
+                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl + "/wechat/bind")));
                         Article1.setTitle("注册会员");
                         Article1.setDescription("注册会员，即可享受多种服务");
                         List<Article> list = new ArrayList<>();
                         Article Article2 = new Article();
                         Article2.setPicUrl("https://ww4.sinaimg.cn/large/006tKfTcgy1fdfbzomrzej305k05kjra.jpg");
-                        Article2.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/bind")));
+                        Article2.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl +"/wechat/loginto")));
                         Article2.setTitle("会员绑定");
                         Article2.setDescription("绑定会员，即可享受多种服务");
                         Article Article3 = new Article();
                         Article3.setPicUrl("https://ww3.sinaimg.cn/large/006tKfTcgy1fdfc1od3s1j305k05kglj.jpg");
-                        Article3.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8("http://23f25bf7.ittun.com/wechat/alter")));
+                        Article3.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl +"/wechat/alter")));
                         Article3.setTitle("信息修改");
                         Article3.setDescription("修改个人信息");
+                        Article Article4 = new Article();
+                        Article4.setPicUrl("https://ww1.sinaimg.cn/large/006tKfTcgy1fdhqag3qt0j305k05k0t0.jpg");
+//                        Article4.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl +"/wechat/toorder")));
+                        Article4.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl + "/wechat/alterpwd")));
+                        Article4.setTitle("修改密码");
+                        Article4.setDescription("修改个人密码");
+                        list.add(Article1);
+                        list.add(Article2);
+                        list.add(Article3);
+                        list.add(Article4);
+                        NewsMessage newsMessage = new NewsMessage();
+                        newsMessage.setArticleCount(4);
+                        newsMessage.setArticles(list);
+                        newsMessage.setCreateTime(new Date().getTime());
+                        newsMessage.setFromUserName(toUserName);
+                        newsMessage.setToUserName(fromUserName);
+                        newsMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+                        responeXML = MessageUtil.messageToXml(newsMessage);
+                        System.out.println(responeXML);
+                        out.print(responeXML);
+                    } else if(eventKey.equals("FUNCTION")) {
+                        String responseXML = "";
+                        Article Article1  = new Article();
+                        Article1.setPicUrl("https://ww2.sinaimg.cn/large/006tNc79gy1fdnt4nfpowj30a005k3z3.jpg");
+                        Article1.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl + "/wechat/uploadPic")));
+                        Article1.setTitle("上传照片");
+                        Article1.setDescription("上传照片，获得更多个人服务");
+                        List<Article> list = new ArrayList<>();
+                        Article Article2 = new Article();
+                        Article2.setPicUrl("https://ww2.sinaimg.cn/large/006tNc79gy1fdnt5b4v1lj305k05kgli.jpg");
+                        Article2.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl +"/wechat/getinfo")));
+                        Article2.setTitle("信息查询");
+                        Article2.setDescription("获取个人信息");
+                        Article Article3 = new Article();
+                        Article3.setPicUrl("https://ww4.sinaimg.cn/large/006tNc79gy1fdnt5oo1y7j305k05k746.jpg");
+                        Article3.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl +"/wechat/order1")));
+                        Article3.setTitle("购买记录");
+                        Article3.setDescription("获取购买记录");
                         list.add(Article1);
                         list.add(Article2);
                         list.add(Article3);
@@ -140,19 +176,21 @@ public class CoreService {
                         newsMessage.setFromUserName(toUserName);
                         newsMessage.setToUserName(fromUserName);
                         newsMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
-                        responeXML = MessageUtil.messageToXml(newsMessage);
-                        System.out.println(responeXML);
-                        out.print(responeXML);
-                    } else if(eventKey.equals("BIND")) {
-//                        responseContent = "点击<a href=\"http://www.weiwoduzun.me/admin/toLogin\">绑定</a>以绑定会员账号";
-                    } else if(eventKey.equals("REGISTER")) {
-//                        responseContent = "点击<a href=\"http://www.weiwoduzun.me/admin/toLogin\">注册</a>进行注册";
-                    } else if(eventKey.equals("ALTER")) {
-//                        responseContent = "点击<a href=\"http://www.weiwoduzun.me/admin/toLogin\">修改</a>修改本人相关信息";
-                    } else if(eventKey.equals("QUERY")) {
-//                        responseContent = "点击<a href=\"http://www.weiwoduzun.me/admin/toLogin\">查询订单</a>查看订单";
-                    } else if(eventKey.equals("COMMEND")) {
-//                        responseContent = "<a href=\"http://www.weiwoduzun.me/admin/toLogin\">本日推荐商品</a>";
+                        responseXML = MessageUtil.messageToXml(newsMessage);
+                        System.out.println(responseXML);
+                        out.print(responseXML);
+                    } else if(eventKey.equals("FEEDBACK")) {
+                        String responseXML = "";
+                        TextMessage textMessage = new TextMessage();    //文本信息
+                        textMessage.setToUserName(fromUserName);
+                        textMessage.setFromUserName(toUserName);
+                        textMessage.setCreateTime(new Date().getTime());
+                        textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+                        String responseContent = "亲爱的顾客，您可以发送反馈加上反馈信息向我们发出您购买中的问题。" +
+                                "我们会及时派客服解决您的问题。您的开心是我们的唯一动力，合作愉快。";
+                        textMessage.setContent(responseContent);
+                        responseXML = MessageUtil.messageToXml(textMessage);
+                        out.print(responseXML);
                     }
                 }
             }

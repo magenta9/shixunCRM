@@ -32,4 +32,9 @@
             (#{order.ordersCode}, #{order.userId}, #{order.ordersSum}, #{order.ordersDiscount})
         </foreach>
     </insert>
+
+    <select id="listSale" resultType="double">
+        SELECT IFNULL(SUM(o_sum), 0.0) from orders where date_format(o_date, "%Y-%m")=
+        date_format(DATE_SUB(curdate(), INTERVAL #{month} MONTH), "%Y-%m");
+    </select>
 </mapper>

@@ -20,12 +20,18 @@ public class CatagoryTest {
         catagoryDao = (CatagoryDao) ctx.getBean("catagoryDao");
     }
 
+    /**
+     * 测试添加用户
+     */
     @Test
     public void testAdd() {
         Catagory catagory = new Catagory("生鲜");
         System.out.println(catagoryDao.add(catagory));
     }
 
+    /**
+     * 测试查找用户吗
+     */
     @Test
     public void testFindNamebyId() {
         System.out.println(catagoryDao.findNamebyId(2));

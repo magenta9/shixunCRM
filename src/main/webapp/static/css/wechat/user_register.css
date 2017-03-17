@@ -1,0 +1,13 @@
+.u_body{
+	margin: 0px auto;
+	max-width: 720px;
+	min-height: 100%;
+	background-color: #eeeeee;
+	position: relative;
+}
+
+.span_warning{
+	font-size: 14px;
+	color: #ad1b22;
+	font-style: italic;
+}

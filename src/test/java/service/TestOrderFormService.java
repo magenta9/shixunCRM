@@ -48,6 +48,7 @@ public class TestOrderFormService {
     @Test
     public void testFindOtherbyUId() {
         Pagination up = orderFormService.getUserOrderForm(5, 1, 10);
+        if(up == null) return;
         System.out.println("分页组件信息:");
         System.out.println("总条数:"+up.getTotalCount());
         System.out.println("总页数:"+up.getTotalPages());
@@ -59,6 +60,7 @@ public class TestOrderFormService {
     @Test
     public void testfindbyId() {
         List<OrderForm> list = orderFormService.findbyUserId(5);
+        if(list == null) return;
         for (OrderForm orderForm : list) {
             System.out.println(orderForm.getUserName());
             for (OrderFormItem formitem : orderForm.getOrderItemList()) {

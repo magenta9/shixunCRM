@@ -77,13 +77,17 @@ public class OrderFormServiceImpl implements OrderFormService{
 
     @Override
     public Pagination getUserOrderForm(int userId, int pageIndex, int pageSize) {
+        Pagination pagination = null;
         List<Orders> listOrders = ordersDao.findbyUserId(userId);
-        int totalCount = orderItemDao.getCountbyOrders(listOrders);
-        Pagination pagination = new UserPagination(pageIndex,pageSize,totalCount);
-        List<OrderItem> list = orderItemDao.findbyOrders(listOrders, (pageIndex-1)*pageSize,pageSize);
+        if(null != listOrders && listOrders.size() > 0){
+            int totalCount = orderItemDao.getCountbyOrders(listOrders);
+            pagination = new UserPagination(pageIndex,pageSize,totalCount);
+            List<OrderItem> list = orderItemDao.findbyOrders(listOrders, (pageIndex-1)*pageSize,pageSize);
 
-        pagination.setItems(item2FormItem(list));
-        pagination.countTotalPageNum();
+            pagination.setItems(item2FormItem(list));
+            pagination.countTotalPageNum();
+        }
+
         return pagination;
     }
 

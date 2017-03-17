@@ -1,5 +1,6 @@
 package dao;
 
+import entity.CatagoryCount;
 import entity.OrderItem;
 import entity.Orders;
 import org.apache.ibatis.annotations.Param;
@@ -29,5 +30,10 @@ public interface OrderItemDao {
     int getCountbyOrders(List<Orders> orders);
 
     List<OrderItem> findbyOrders(@Param("list") List<Orders> orders, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
+
+
+    List<Integer> getTopNProduce(@Param("num") int n);
+
+    List<CatagoryCount> getCatagoryCount();
 
 }

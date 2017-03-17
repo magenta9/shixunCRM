@@ -27,6 +27,7 @@ public class MenuUtil {
 
         String url = menu_create_url.replace("ACCESS_TOKEN", accessToken);
         String jsonMenu = GsonUtil.gson.toJson(menu).toString();
+        System.out.println(jsonMenu);
         String gsonObject = ConnUtil.httpRequest(url, "POST", jsonMenu);
         gsonObject = gsonObject.substring(1, gsonObject.length() - 1);
         gsonObject = gsonObject.replace("\\\"", "\"");
