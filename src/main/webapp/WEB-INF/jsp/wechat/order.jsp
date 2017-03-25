@@ -96,7 +96,7 @@
                             "<div class='zfdd'>" +
                             "<ul>" +
                             "<li class='li3'>" +
-                            "<img src='${ pageContext.request.contextPath }/static/img/product/12.jpg'  style='width: 60px;height: 60px'/>" +
+                            "<img src='"+orderFormItem.productImage +"'  style='width: 60px;height: 60px'/>" +
                             "</li>" +
                             "<li class='li4'>" +
                             "<span>×" + orderFormItem.ItemNum +"</span><br><span>"+ orderFormItem.productName+"</span> <br>" +

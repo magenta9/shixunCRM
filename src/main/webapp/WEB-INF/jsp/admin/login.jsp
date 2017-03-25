@@ -26,11 +26,13 @@
     <![endif]-->
   </head>
   <body>
-    
-   	<div class="container">
+
+  <div style="background:url(${ pageContext.request.contextPath }/static/img/background.jpg) no-repeat center; opacity:0.5; position:absolute; z-index:-1; width:100%; height:100%; background-size:100%;">
+  </div>
+
+
    		<div class="row">
-   			<div class="col-md-3"></div>
-		   		<div class="login-form col-md-4">
+		   		<div class="login-form" style="position:absolute;right: 250px; ">
 		   			<form action="login" method="post" id="form_login">
 		   				<h4 align="center">管理员登录</h4>
 		   				<br/>
@@ -46,10 +48,8 @@
 			   			<input type="submit" class="btn btn-hg btn-primary btn-block" value="登录"/>
 		   			</form>
 		   		</div>
-		   		<div class="col-md-3"></div>
 	   	</div>
 
-   	</div>
 
 
 
@@ -59,6 +59,7 @@
 
   <script>
 	  $(function () {
+          $("#username").focus();
           $("#form_login").submit(function () {
               var username = $("#username").val();
               var password = $("#password").val();
@@ -68,9 +69,6 @@
                   $("#span_msg").text("用户名和密码不能为空!");
 			      return false;
 			  }
-          });
-          $("#username").focus(function () {
-              $("#span_msg").text("");
           });
 
           $("#password").focus(function () {

@@ -170,6 +170,25 @@ public class UserServicesImpl implements UserService{
     }
 
     @Override
+    public boolean addPersonface(User user) {
+        String str =null;
+        try {
+            str = FaceIdentifyUtil.addface(user.getUserImageUrl(),user.getPersonId(),"zp");
+            // System.out.println(str.length());
+            if(str!=null){
+                return true;
+            }
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     public User identifyUser(String url) {
         User user = null;
         try {

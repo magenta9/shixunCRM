@@ -10,6 +10,7 @@ import service.AdminService;
 import util.DateUtil;
 import util.RegressionLine;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -57,6 +58,44 @@ public class AdminServiceImpl implements AdminService{
         return map;
     }
 
+    private Map<String,Integer> getAddUserCountMap(String startTime, String endTime) {
+        Map<String, Integer> map = new TreeMap<>();
+        Calendar calendarStart = DateUtil.String2Date(startTime);
+        Calendar calendarEnd = DateUtil.String2Date(endTime);
+        while (calendarStart.compareTo(calendarEnd) <= 0) {
+            String start = new SimpleDateFormat("yyyy-MM-dd").format(calendarStart.getTime());
+            calendarStart.add(Calendar.MONTH, 1);
+            calendarStart.set(Calendar.DAY_OF_MONTH, 1);
+            String end;
+            if(calendarStart.compareTo(calendarEnd) <= 0) {
+                end = new SimpleDateFormat("yyyy-MM-dd").format(calendarStart.getTime());
+            } else {
+                end = new SimpleDateFormat("yyyy-MM-dd").format(calendarEnd.getTime());
+            }
+            map.put(start.substring(0, 7), userDao.listaddBetween(start, end));
+        }
+        return map;
+    }
+
+    private Map<String,Double> getMonthSaleMap(String startTime, String endTime) {
+        Map<String, Double> map = new TreeMap<>();
+        Calendar calendarStart = DateUtil.String2Date(startTime);
+        Calendar calendarEnd = DateUtil.String2Date(endTime);
+        while (calendarStart.compareTo(calendarEnd) <= 0) {
+            String start = new SimpleDateFormat("yyyy-MM-dd").format(calendarStart.getTime());
+            calendarStart.add(Calendar.MONTH, 1);
+            calendarStart.set(Calendar.DAY_OF_MONTH, 1);
+            String end;
+            if(calendarStart.compareTo(calendarEnd) <= 0) {
+                end = new SimpleDateFormat("yyyy-MM-dd").format(calendarStart.getTime());
+            } else {
+                end = new SimpleDateFormat("yyyy-MM-dd").format(calendarEnd.getTime());
+            }
+            map.put(start.substring(0, 7), ordersDao.listSaleBetween(start, end));
+        }
+        return map;
+    }
+
     @Override
     public Map<String, Double> getMonthSaleMap() {
         Map<String, Double> map = new TreeMap<>();
@@ -77,12 +116,19 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public String getCatagoryCount() {
+    public String getUserSexCount() {
+        Map<String, Integer> map = new TreeMap<>();
+        map.put("1", userDao.getSexCount("男"));
+        map.put("0", userDao.getSexCount("女"));
+        String s = new Gson().toJson(map).toString();
+        System.out.println(s);
+        return s;
+    }
+
+    @Override
+    public List<CatagoryCount> getCatagoryCount() {
         List<CatagoryCount> list = orderItemDao.getCatagoryCount();
-//        for (CatagoryCount catagoryCount : list) {
-//            System.out.println(catagoryCount.getName() + "->>>>" + catagoryCount.getNumber());
-//        }
-        return new Gson().toJson(list).toString();
+        return list;
     }
 
     @Override
@@ -100,6 +146,22 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public String getAddUserCount(String startTime, String endTime) {
+        Map<String, Integer> map = getAddUserCountMap(startTime, endTime);
+        List<UserCount> list = new ArrayList<>();
+        for (Map.Entry<String, Integer> stringIntegerEntry : map.entrySet()) {
+//            System.out.println(stringIntegerEntry.getKey() + "---->" + stringIntegerEntry.getValue());
+            UserCount userCount = new UserCount();
+            userCount.setDate(stringIntegerEntry.getKey());
+            userCount.setCount(stringIntegerEntry.getValue());
+            list.add(userCount);
+        }
+        return new Gson().toJson(list).toString();
+    }
+
+
+
+    @Override
     public String getPast6MonthSale() {
         Map<String, Double> map = getMonthSaleMap();
         List<SaleCount> list = new ArrayList<>();
@@ -111,6 +173,21 @@ public class AdminServiceImpl implements AdminService{
         }
         return new Gson().toJson(list).toString();
     }
+
+    @Override
+    public String getMonthSale(String startTime, String endTime) {
+        Map<String, Double> map = getMonthSaleMap(startTime, endTime);
+        List<SaleCount> list = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            SaleCount saleCount = new SaleCount();
+            saleCount.setDate(entry.getKey());
+            saleCount.setSalesNum(entry.getValue());
+            list.add(saleCount);
+        }
+        return new Gson().toJson(list).toString();
+    }
+
+
 
     @Override
     public String getMonthSaleAndForecast() {

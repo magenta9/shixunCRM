@@ -31,7 +31,6 @@ public interface OrderItemDao {
 
     List<OrderItem> findbyOrders(@Param("list") List<Orders> orders, @Param("offSet") int offSet, @Param("pageSize") int pageSize);
 
-
     List<Integer> getTopNProduce(@Param("num") int n);
 
     List<CatagoryCount> getCatagoryCount();

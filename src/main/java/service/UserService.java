@@ -52,6 +52,9 @@ public interface UserService {
     //上传照片创建用户personId
     boolean createUserPersonId(User user);
 
+    //上传用户照片
+    boolean addPersonface(User user);
+
     //进行人脸识别，获取userId
     User identifyUser(String url);
 }

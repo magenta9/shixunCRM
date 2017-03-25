@@ -51,10 +51,9 @@ public class RecommandController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Recommand verifyUserName(@RequestParam(value = "pictureUrl")String pictureUrl){
-        Recommand recommand = null;
+        Recommand recommand = new Recommand();
         User user = userService.identifyUser(pictureUrl);
         if(user != null){
-            recommand = new Recommand();
             recommand.setUser(user);
             List<ProductItem> products = recommendService.recommend(user.getUserName());
             if(products != null && products.size() > 0){

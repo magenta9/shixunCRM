@@ -1,13 +1,17 @@
 package controller.wechat;
 
+import entity.ProductItem;
 import entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import service.OrderFormService;
+import service.RecommendService;
 import service.UserService;
 import util.Pagination;
+
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -22,6 +26,9 @@ public class WeChatUserController {
 
     @Resource
     private OrderFormService orderFormService;
+
+    @Resource
+    private RecommendService recommendService;
 
     /**
      * 跳转到会员的登录界面并携带openId
@@ -328,5 +335,40 @@ public class WeChatUserController {
             map.addAttribute("msg","该微信还未绑定，请先绑定！");
             return "/wechat/warn";
         }
+    }
+
+    /**
+     * 跳转到商品推荐的页面
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/toRecommand")
+    public String toRecommand(HttpServletRequest request,ModelMap map){
+        String openid = (String) request.getAttribute("openid");
+        if(openid == null) openid = (String) request.getParameter("openid");
+        User user = userService.getUserByOpenId(openid);
+        if(user != null){
+            map.addAttribute("user",user);
+            map.addAttribute("openid",openid);
+            return "/wechat/recommand";
+        }else{
+            map.addAttribute("msg","该微信还未绑定，请先绑定！");
+            return "/wechat/warn";
+        }
+    }
+
+    /**
+     * ajax返回商品的信息
+     * @param openid
+     * @return
+     */
+    @RequestMapping(value = "/recommand")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductItem> recommand(@RequestParam("openid")String openid)
+    {
+        User user = userService.getUserByOpenId(openid);
+        List<ProductItem> recommendProducts = recommendService.recommend(user.getUserName());
+        return recommendProducts;
     }
 }

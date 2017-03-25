@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import service.AdminService;
+import util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -43,7 +44,9 @@ public class AdminController {
     @RequestMapping("/login")
     public String login(Admin admin,ModelMap map,HttpSession session){
         //判断逻辑
-        if(admin.getAdminName() != null && admin.getAdminName() != "" && admin.getAdminPassword() != null && admin.getAdminPassword() != ""){
+        if(StringUtils.isEmpty(admin.getAdminName())|| StringUtils.isEmpty(admin.getAdminName())){
+            return "/admin/login";
+        }else {
             if(adminService.isValid(admin.getAdminName(),admin.getAdminPassword())){
                 session.setAttribute("admin",admin);
                 return "redirect:/admin/main";
@@ -52,8 +55,6 @@ public class AdminController {
                 map.addAttribute("admin",admin);
                 return "/admin/login";
             }
-        }else {
-            return "/admin/login";
         }
     }
 

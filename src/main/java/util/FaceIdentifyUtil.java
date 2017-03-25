@@ -1,5 +1,6 @@
 package util;
 
+import com.google.gson.JsonObject;
 import entity.PersonEntity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -40,14 +41,15 @@ public class FaceIdentifyUtil {
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
             request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", "1e69724431534a509180ebac02dad820");
+            request.setHeader("Ocp-Apim-Subscription-Key", "1ba9810faf4e4883afccca31c2695ef4");
             // Request body
             StringEntity reqEntity = new StringEntity(jso.toString(), "utf-8");
             request.setEntity(reqEntity);
             HttpResponse response = httpclient.execute(request);
             //  HttpEntity entity = response.getEntity();
             HttpEntity entity = response.getEntity();
-            if (entity != null) {
+            String str1 = response.getStatusLine().toString();
+            if ((entity != null)&&str1.equals("HTTP/1.1 200 OK")) {
                 String str = EntityUtils.toString(entity);
                 str = str.substring(1,str.length()-1);
 
@@ -72,7 +74,7 @@ public class FaceIdentifyUtil {
             URIBuilder builder = new URIBuilder("https://api.cognitive.azure.cn/face/v1.0/persongroups/"+groupid+"/train");
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
-            request.setHeader("Ocp-Apim-Subscription-Key", "1e69724431534a509180ebac02dad820");
+            request.setHeader("Ocp-Apim-Subscription-Key", "1ba9810faf4e4883afccca31c2695ef4");
             HttpResponse response = httpclient.execute(request);
             HttpEntity entity = response.getEntity();
 
@@ -103,7 +105,7 @@ public class FaceIdentifyUtil {
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
             request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", "1e69724431534a509180ebac02dad820");
+            request.setHeader("Ocp-Apim-Subscription-Key", "1ba9810faf4e4883afccca31c2695ef4");
 
 
             // Request body
@@ -148,7 +150,7 @@ public class FaceIdentifyUtil {
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
             request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", "1e69724431534a509180ebac02dad820");
+            request.setHeader("Ocp-Apim-Subscription-Key", "1ba9810faf4e4883afccca31c2695ef4");
 
 
             // Request body
@@ -157,13 +159,13 @@ public class FaceIdentifyUtil {
 
             HttpResponse response = httpclient.execute(request);
             HttpEntity entity = response.getEntity();
-
-            if (entity != null)
+            String str1 = response.getStatusLine().toString();
+            if (entity != null&&str1.equals("HTTP/1.1 200 OK"))
             {
 
                 JSONObject jsonObject =JSONObject.fromObject(EntityUtils.toString(entity));
                 str=jsonObject.getString("persistedFaceId");
-
+                return str;
             }
         }
         catch (Exception e)
@@ -195,7 +197,7 @@ public class FaceIdentifyUtil {
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
             request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", "1e69724431534a509180ebac02dad820");
+            request.setHeader("Ocp-Apim-Subscription-Key", "1ba9810faf4e4883afccca31c2695ef4");
 
 
             // Request body
@@ -205,7 +207,8 @@ public class FaceIdentifyUtil {
             HttpResponse response = httpclient.execute(request);
             HttpEntity entity = response.getEntity();
 
-            if (entity != null)
+            String str1 = response.getStatusLine().toString();
+            if ((entity != null)&&str1.equals("HTTP/1.1 200 OK"))
             {
                 String str = EntityUtils.toString(entity);
                 str= str.substring(1,str.length()-1);
@@ -217,7 +220,7 @@ public class FaceIdentifyUtil {
                 JSONObject jsonResultCondates = JSONObject.fromObject(arrayResult.get(0));
                 identity.setConfidence(jsonResultCondates.getString("confidence"));
                 identity.setPersonid(jsonResultCondates.getString("personId"));
-
+                System.out.println(identity.getPersonid());
             }
         }
         catch (Exception e)

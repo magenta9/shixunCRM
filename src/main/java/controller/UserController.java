@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import service.UserService;
 import util.ErrorMessage;
 import util.Pagination;
+import util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -233,7 +234,7 @@ import java.util.regex.Pattern;
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public User toUpdate(User user){
-        System.out.println(user);
+       // System.out.println(user);
         return user;
     }
 
@@ -258,7 +259,7 @@ import java.util.regex.Pattern;
             map.addAttribute("radio",radio);
         }
 
-        if(null != condition && ""!= condition){
+        if(!StringUtils.isEmpty(condition)){
             map.addAttribute("condition",condition);
         }
 
@@ -289,7 +290,7 @@ import java.util.regex.Pattern;
         if(null != radio){
             map.addAttribute("radio",radio);
         }
-        if(null != condition && ""!= condition){
+        if(!StringUtils.isEmpty(condition)){
             map.addAttribute("condition",condition);
         }
         return "redirect:/user/list";
@@ -320,7 +321,7 @@ import java.util.regex.Pattern;
         if(null != radio){
             map.addAttribute("radio",radio);
         }
-        if(null != condition && ""!= condition){
+        if(!StringUtils.isEmpty(condition)){
             map.addAttribute("condition",condition);
         }
         return "redirect:/user/list";
@@ -404,7 +405,7 @@ import java.util.regex.Pattern;
         Pagination pagination = null;
 
         //如果条件不为空，且单选按钮有值
-        if(null != radio && null !=condition && "" != condition){
+        if(null != radio && !StringUtils.isEmpty(condition)){
             queryParames.append("&radio=" + radio);
             queryParames.append("&condition=" +condition );
 
@@ -436,10 +437,15 @@ import java.util.regex.Pattern;
     @RequestMapping(value = "/verifyUserName")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public String verifyUserName(@RequestParam(value = "userName")String userName){
+    public String verifyUserName(@RequestParam(value = "userName")String userName,@RequestParam(value = "userId",required = false)Integer userId){
         String msg = "";
         boolean flag = false;
         flag = userService.UserNameUsed(userName);
+        if(userId != null){
+            User user = userService.getUserByUid(userId);
+            if(userName.equals(user.getUserName()))
+                flag = false;
+        }
         if(flag == true){
             msg = "1";
         }else{
@@ -490,7 +496,7 @@ import java.util.regex.Pattern;
         Integer userLevel = user.getUserLevel();
         String password = user.getUserPassword();
 
-        if(userName != null && userName.length() > 0){
+        if(!StringUtils.isEmpty(userName)){
             if(userName.length() < 4 && userName.length() > 12 ){
               String msg = "会员名长度必须4-12位";
               errors.add(msg);
@@ -505,7 +511,7 @@ import java.util.regex.Pattern;
             errors.add(msg);
         }
 
-        if(phone != null && phone.length() > 0) {
+        if(!StringUtils.isEmpty(phone)) {
             String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
             Pattern p = Pattern.compile(regExp);
             Matcher m = p.matcher(phone);
@@ -516,7 +522,7 @@ import java.util.regex.Pattern;
 
         }
 
-        if(email != null && email.length() > 0) {
+        if(!StringUtils.isEmpty(email)) {
             String regExp = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
             Pattern p = Pattern.compile(regExp);
             Matcher m = p.matcher(email);
@@ -534,7 +540,7 @@ import java.util.regex.Pattern;
           }
         }
 
-        if(password != null && password.length() > 0) {
+        if(!StringUtils.isEmpty(password)) {
            if (password.length() < 6 || password.length() > 12){
                String msg = "密码长度必须6-12位！";
                errors.add(msg);

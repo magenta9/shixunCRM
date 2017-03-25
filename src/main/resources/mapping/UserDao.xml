@@ -127,4 +127,13 @@
         SELECT COUNT(*) FROM USER WHERE date_format(u_createdate, '%Y-%m')=#{date} AND is_deleted=0;
     </select>
 
+    <select id="listaddBetween" resultType="int">
+        SELECT COUNT(*) FROM USER WHERE u_createdate &gt; #{start} AND u_createdate &lt; #{end} AND is_deleted=0;
+    </select>
+
+    <select id="getSexCount" resultType="int">
+        SELECT COUNT(*) FROM USER WHERE u_sex=#{sexy} AND is_deleted=0;
+    </select>
+
+
 </mapper>

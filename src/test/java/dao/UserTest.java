@@ -213,4 +213,8 @@ public class UserTest {
         System.out.println(userDao.listaddUser("2017-03"));
     }
 
+    @Test
+    public void testSexCount() {
+        System.out.println("man:" + userDao.getSexCount("女"));
+    }
 }

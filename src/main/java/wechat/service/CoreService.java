@@ -166,11 +166,17 @@ public class CoreService {
                         Article3.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl +"/wechat/order1")));
                         Article3.setTitle("购买记录");
                         Article3.setDescription("获取购买记录");
+                        Article Article4 = new Article();
+                        Article4.setPicUrl("https://ww4.sinaimg.cn/large/006tNbRwgy1fdvggf2dd6j305k05kq2s.jpg");
+                        Article4.setUrl(str.replace("REDIRECT_URI", Oauth2Util.urlEncodeUtf8(ConnUtil.baseUrl +"/wechat/getrecommend")));
+                        Article4.setTitle("商品推荐");
+                        Article4.setDescription("推荐商品");
                         list.add(Article1);
                         list.add(Article2);
                         list.add(Article3);
+                        list.add(Article4);
                         NewsMessage newsMessage = new NewsMessage();
-                        newsMessage.setArticleCount(3);
+                        newsMessage.setArticleCount(4);
                         newsMessage.setArticles(list);
                         newsMessage.setCreateTime(new Date().getTime());
                         newsMessage.setFromUserName(toUserName);

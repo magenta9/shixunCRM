@@ -45,11 +45,14 @@
 			<div class="row div_search">
 				<div class="col-md-3"></div>
 				<div class="col-md-6">
-					<form action="#" role="search">
+					<form action="list" role="search">
+						<input type="hidden" name="userId" value="${userId}"/>
+						<input type="hidden" name="userId" value="${pagination.currentPage}"/>
+						<input type="hidden" name="pageSize" value="${pagination.pageSize}">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="搜索订单">
+							<input type="text" class="form-control" placeholder="搜索订单" name="text">
 							<span class="input-group-btn">
-				        <button class="btn " type="button">Go</button>
+				        <input type="submit" class="btn ">Go</input>
 				      </span>
 						</div><!-- /input-group -->
 					</form>
@@ -74,14 +77,14 @@
 									<tbody>
 									<td class="col-md-3">日期：${orderFormItem.date}</td>
 									<td class="col-md-6">订单号：${orderFormItem.ordersCode}</td>
-									<td class="col-md-3">品牌：</td>
+									<td class="col-md-3">品牌：${orderFormItem.productBrand}</td>
 									</tbody>
 								</table>
 							</div>
 							<div class="panel-body">
 								<table>
 									<tbody>
-									<td class="col-md-2"><img  src="${ pageContext.request.contextPath }/static/img/product/12.jpg"></td>
+									<td class="col-md-2"><img  src="${orderFormItem.productImage}" style="width: 120px;height: 120px"></td>
 									<td class="col-md-2">
 											${orderFormItem.productName}
 									</td>
@@ -117,10 +120,17 @@
 
 	<!-- 右侧用户信息开始 -->
 	<div class="div_right">
-		<div class="div_img"><img src="${ pageContext.request.contextPath }/static/img/timg_1.jpg"></div>
+		<div class="div_img">
+			<img src="
+			<c:if test='${not empty user.userImageUrl}'>${user.userImageUrl}</c:if>
+			<c:if test='${empty user.userImageUrl}'>
+				${ pageContext.request.contextPath }/static/img/wechat/user.png
+			</c:if>
+			">
+		</div>
 		<div class="div_info">
-			<span>会员名：${user.userName}</span><br/>
-			<span>积分：${user.userScore}</span><br/>
+			<span style="font-size: 12px;">${user.userName}</span><br/>
+			<span style="font-size: 12px;">积分：${user.userScore}</span><br/>
 		</div>
 	</div>
 	<!-- 右侧用户信息结束 -->

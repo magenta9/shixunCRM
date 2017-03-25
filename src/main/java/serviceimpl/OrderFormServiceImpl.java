@@ -30,6 +30,7 @@ public class OrderFormServiceImpl implements OrderFormService{
     @Autowired
     private ProductDao productDao;
 
+
     @Override
     public  List<OrderForm> findbyUserId(int id) {
         List<Orders> listOrders = ordersDao.findbyUserId(id);
@@ -79,6 +80,22 @@ public class OrderFormServiceImpl implements OrderFormService{
     public Pagination getUserOrderForm(int userId, int pageIndex, int pageSize) {
         Pagination pagination = null;
         List<Orders> listOrders = ordersDao.findbyUserId(userId);
+        if(null != listOrders && listOrders.size() > 0){
+            int totalCount = orderItemDao.getCountbyOrders(listOrders);
+            pagination = new UserPagination(pageIndex,pageSize,totalCount);
+            List<OrderItem> list = orderItemDao.findbyOrders(listOrders, (pageIndex-1)*pageSize,pageSize);
+
+            pagination.setItems(item2FormItem(list));
+            pagination.countTotalPageNum();
+        }
+
+        return pagination;
+    }
+
+    @Override
+    public Pagination getUserOrderForm(int userId, String text, int pageIndex, int pageSize) {
+        Pagination pagination = null;
+        List<Orders> listOrders = ordersDao.SearhbyUserId(userId, text);
         if(null != listOrders && listOrders.size() > 0){
             int totalCount = orderItemDao.getCountbyOrders(listOrders);
             pagination = new UserPagination(pageIndex,pageSize,totalCount);

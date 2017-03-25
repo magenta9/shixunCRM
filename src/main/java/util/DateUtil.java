@@ -10,7 +10,8 @@ import java.text.SimpleDateFormat;
  */
 public class DateUtil {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     public static Calendar String2Date(String dateString) {
         try {

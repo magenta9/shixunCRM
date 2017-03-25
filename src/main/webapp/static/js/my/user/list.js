@@ -3,6 +3,12 @@
  */
 $(function () {
 
+    $("#btn_append").click(function () {
+        init();
+        $("#model_append").modal();
+    });
+
+
     //搜索框的验证
     $("#form_search").submit(function(){
         var condition = $(" #form_search #condition").val();
@@ -219,9 +225,16 @@ function verifyUserName(userName) {
         username_warning.text("会员名必须为4-12个字符");
         flag = false;
     }else {
+        var url = "";
+        if (typeof($("#userId").val()) == "undefined") {
+            url = "verifyUserName?userName=" + userName;
+        }else {
+            var userid = $("#userId").val();
+            url = "verifyUserName?userName=" + userName +"&userId=" + userid;
+        }
         //检验用户名是否存在
         $.ajax({
-            url:"verifyUserName?userName=" + userName,
+            url:url,
             async: false,
             type:"get",
             dataType:"json",
@@ -291,6 +304,7 @@ function checkBox(name,checked) {
  *跳转到修改会员的界面
  */
 function updateUser(userId,currentPage,pageSize,radio,condition){
+    init();
     $.ajax({
         type:"get",
         url:"toUpdate?userId=" + userId + "&t="+( new Date() ).getTime().toString(),
@@ -320,8 +334,23 @@ function updateUser(userId,currentPage,pageSize,radio,condition){
             $("#email").val(user.userEmail);
             $("#phone").val(user.userPhone);
 
-
-            $("#btn_append").trigger("click");
+            $("#model_append").modal();
         }
     });
+}
+
+
+function init(){
+    $("#username").val("").attr("disabled",false);
+    $("#password").val("123456").attr("disabled",false);
+    $("#repassword").val("123456").attr("disabled",false);
+    $("#email").val("").attr("disabled",false);
+    $("#phone").val("").attr("disabled",false);
+    $("#radio1").prop("checked",true);
+    $("#radio2").prop("checked",false);
+    $("#username_warning").text("");
+    $("#password_warning").text("");
+    $("#repassword_warning").text("");
+    $("#email_warning").text("");
+    $("#phone_warning").text("");
 }

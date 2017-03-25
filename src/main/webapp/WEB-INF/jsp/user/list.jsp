@@ -53,14 +53,14 @@
 					<div class="form-group">
 						<label for="password" class="col-sm-3 control-label">输入密码</label>
 						<div class="col-sm-9">
-							<input type="password" class="form-control" id="password" name="userPassword" placeholder="6-12个字符，初始密码为123456" value="123456" />
+							<input type="password" class="form-control" id="password" name="userPassword" placeholder="6-12个字符，初始密码为123456" />
 							<span id="password_warning" class="span_warning"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="repassword" class="col-sm-3 control-label">重新输入密码</label>
 						<div class="col-sm-9">
-							<input type="password" class="form-control" id="repassword" placeholder="6-12个字符，初始密码为123456" value="123456" />
+							<input type="password" class="form-control" id="repassword" placeholder="6-12个字符，初始密码为123456"  />
 							<span id="repassword_warning" class="span_warning"></span>
 						</div>
 					</div>
@@ -289,7 +289,7 @@
 
 <!--右侧工具组开始-->
 <div class="btn-group div_btn_group" role="group" aria-label="工具组">
-	<button type="button" id="btn_append" class="btn btn-inverse" data-toggle="modal" data-target="#model_append">添加</button>
+	<button type="button" id="btn_append" class="btn btn-inverse">添加</button>
 	<button type="button" class="btn btn-inverse" data-toggle="modal" data-target="#model_file">导入</button>
 	<button type="button"  class="btn btn-inverse" onclick="
 	<c:if test="${not empty radio && not empty condition}">

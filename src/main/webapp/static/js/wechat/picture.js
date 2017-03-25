@@ -38,7 +38,7 @@ function imgPreview(fileDom){
                 if(data == "1"){
                     swal("","上传成功","success");
                 }else{
-                    swal("","上传失败","error");
+                    swal("","您上传的照片不符合要求","error");
                 }
                 a_file.attr("disabled",false);
             }

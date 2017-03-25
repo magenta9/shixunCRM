@@ -70,4 +70,10 @@ public interface UserDao {
 
     //查找当月新增会员数
     int listaddUser(@Param("date") String yearandmonth);
+
+    //查找当前日期开始的新增人数
+    int listaddBetween(@Param("start") String start, @Param("end") String end);
+
+    //查询会员性别为sex的人的人数
+    int getSexCount(@Param("sexy") String sex);
 }

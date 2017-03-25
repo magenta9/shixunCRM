@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import service.MessageBoardService;
 import service.WechatService;
 import util.Pagination;
+import util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -119,7 +120,7 @@ public class MessageBoardController {
             map.addAttribute("category",category);
         }
 
-        if(null != condition && ""!= condition){
+        if(!StringUtils.isEmpty(condition)){
             map.addAttribute("condition",condition);
         }
 
@@ -168,7 +169,7 @@ public class MessageBoardController {
             pagination = messageBoardService.getMessages(currentPage, pageSize);;
         }
 
-        if(null != condition && "" != condition){
+        if(!StringUtils.isEmpty(condition)){
             queryParames.append("&condition=" + condition );
             map.addAttribute("condition",condition);
             pagination =  messageBoardService.getMessagebyName(currentPage,pageSize,condition);

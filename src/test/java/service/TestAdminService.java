@@ -13,9 +13,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import util.DateUtil;
 import util.RegressionLine;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,5 +52,22 @@ public class TestAdminService {
     @Test
     public void testCatagoryCount() {
         adminService.getCatagoryCount();
+    }
+
+
+    @Test
+    public void testgetCalender() {
+        Calendar calendarStart = DateUtil.String2Date("2017-01-13");
+        Calendar calendarEnd = DateUtil.String2Date("2017-3-11");
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(calendarEnd.getTime()));
+        calendarEnd.set(Calendar.DAY_OF_MONTH, 1);
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(calendarEnd.getTime()));
+        String str = new SimpleDateFormat("yyyy-MM-dd").format(calendarEnd.getTime());
+//        System.out.println(str.substring(0, 7));
+        System.out.println(adminService.getAddUserCount("2016-12-02", "2017-02-12"));
+//        System.out.println(calendarStart.compareTo(calendarEnd));
+//        if(calendarStart != null && calendarStart.compareTo(calendarEnd) < 0) {
+//            System.out.println("helo");
+//        }
     }
 }

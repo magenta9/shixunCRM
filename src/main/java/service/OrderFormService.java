@@ -41,4 +41,7 @@ public interface OrderFormService {
 
     //分页获取所有购物信息
     Pagination getUserOrderForm(int userId, int pageIndex, int pageSize);
+
+    //分页模糊查询用户购物信息
+    Pagination getUserOrderForm(int userId, String text, int pageIndex, int pageSize);
 }

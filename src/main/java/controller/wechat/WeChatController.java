@@ -96,12 +96,21 @@ public class WeChatController {
         return "forward:/wechat/toInformation";
     }
 
-    //热门商品
+    //购买记录
     @RequestMapping(value = "/order1", method = RequestMethod.GET)
     public String toorder(HttpServletRequest request, HttpServletResponse response) throws IOException {
         addOpenId(request, response);
         return "forward:/wechat/toOrder";
     }
+
+    //推荐商品
+    @RequestMapping(value = "/getrecommend", method = RequestMethod.GET)
+    public String getRecommend(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        addOpenId(request, response);
+        return "forward:/wechat/toRecommand";
+    }
+
+
 
     //添加Openid信息
     public void addOpenId(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {

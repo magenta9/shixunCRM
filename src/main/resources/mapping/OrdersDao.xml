@@ -14,6 +14,10 @@
         SELECT * FROM orders WHERE u_id=#{id} ORDER BY o_date DESC;
     </select>
 
+    <select id="SearhbyUserId" resultMap="orders">
+        SELECT * FROM orders WHERE u_id=#{id} AND o_code LIKE "%${text}%" ORDER BY o_date DESC;
+    </select>
+
     <select id="findbyOrderId" parameterType="int" resultMap="orders">
         SELECT * FROM orders WHERE o_id=#{ordersId};
     </select>
@@ -36,5 +40,10 @@
     <select id="listSale" resultType="double">
         SELECT IFNULL(SUM(o_sum), 0.0) from orders where date_format(o_date, "%Y-%m")=
         date_format(DATE_SUB(curdate(), INTERVAL #{month} MONTH), "%Y-%m");
+    </select>
+
+
+    <select id="listSaleBetween" resultType="double">
+        SELECT IFNULL(SUM(o_sum), 0.0) from orders where o_date &gt; #{start} AND o_date &lt; #{end};
     </select>
 </mapper>
